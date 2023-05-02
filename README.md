@@ -1,7 +1,7 @@
 # Techno2
 Apps Guide
 
-Pakai kotlin,
+Pakai flutter,
 Database pakai Firebase
 
 Yg perlu di buat:
