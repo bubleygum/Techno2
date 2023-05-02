@@ -46,7 +46,7 @@ class MyCustomFormState extends State < MyCustomForm > {
         children: < Widget > [
           SizedBox(
             width: 300,
-            child: Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg')
+            child: Image.asset('assets/images/art1.jpg')
             ),
           SizedBox(
             width: 300,
