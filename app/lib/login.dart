@@ -21,7 +21,7 @@ class LoginForm extends StatelessWidget {
               height: 30,
               child: TextFormField(
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                if (value == null || value.isEmpty) {
                     return 'Username harus di isi';
                   }
                   return null;
