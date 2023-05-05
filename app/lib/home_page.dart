@@ -23,21 +23,9 @@ class HomeStatefulWidget extends StatefulWidget {
 
 class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    SignUpForm(),
+    LoginForm(),
   ];
 
   void _onItemTapped(int index) {
@@ -50,7 +38,17 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        leading: Icon(Icons.menu),
+        title: Text('Page title'),
+        actions: [
+          Icon(Icons.favorite),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Icon(Icons.search),
+          ),
+          Icon(Icons.more_vert),
+        ],
+        backgroundColor: Colors.purple,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -62,16 +60,16 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.record_voice_over),
+            label: 'Therapy',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Color.fromRGBO(0, 74, 173, 1),
         onTap: _onItemTapped,
       ),
     );
