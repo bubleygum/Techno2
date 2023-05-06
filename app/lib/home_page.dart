@@ -23,7 +23,7 @@ class HomeStatefulWidget extends StatefulWidget {
 
 class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     SignUpForm(),
     LoginForm(),
   ];

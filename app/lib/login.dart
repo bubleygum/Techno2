@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:apps/signUp.dart';
 import 'package:apps/home_page.dart';
 
+
+class MyLogInPage extends StatelessWidget {
+  const MyLogInPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(title: Text('Sign Up')),
+      body: LoginForm(),
+    );
+  }
+}
 class LoginForm extends StatelessWidget {
   const LoginForm({ Key ? key});
 

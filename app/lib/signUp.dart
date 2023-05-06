@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apps/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MySignUpPage extends StatelessWidget {
   const MySignUpPage({Key? key}) : super(key: key);
@@ -14,7 +15,11 @@ class MySignUpPage extends StatelessWidget {
 }
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({super.key});
+  //SignUpForm({super.key});
+  TextEditingController _emailController  = TextEditingController();
+  TextEditingController _passwordController  = TextEditingController();
+  // show the password or not
+  bool _isObscure = true;
 
   bool validatePhoneNumber(String phone) {
     // Use a regular expression to check if the phone number is valid
@@ -22,6 +27,7 @@ class SignUpForm extends StatelessWidget {
     return phoneRegex.hasMatch(phone);
   }
 
+  
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -71,9 +77,10 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
-            controller: passCont,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.key),
+            controller: _passwordController,
+            obscureText: _isObscure,
+            decoration: InputDecoration(
+              icon: Icon(Icons.key),
               hintText: 'Password',
               errorStyle: TextStyle(height: 0.5, fontSize: 0),
               errorMaxLines: 2,
@@ -98,6 +105,7 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
+            obscureText: _isObscure,
             decoration: const InputDecoration(
               icon: const Icon(Icons.key),
               hintText: 'Re-type Password',
@@ -124,6 +132,7 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
+            controller: _emailController,
             decoration: const InputDecoration(
               icon: const Icon(Icons.mail),
               hintText: 'Email address',
@@ -233,9 +242,17 @@ class SignUpForm extends StatelessWidget {
               child: const Text('Sign Up'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginForm()));
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: _emailController.text, 
+                    password: _passwordController.text).then((value){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => MyLogInPage()));
+                    }).onError((error, stackTrace) {
+                      print("error ${error.toString()}");
+                    });
                 }
+                
+                      
               },
             )),
       ],
