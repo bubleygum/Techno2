@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:apps/signUp.dart';
 import 'package:apps/home_page.dart';
@@ -15,7 +16,11 @@ class MyLogInPage extends StatelessWidget {
   }
 }
 class LoginForm extends StatelessWidget {
-  const LoginForm({ Key ? key});
+  //const LoginForm({ Key ? key});
+  TextEditingController _emailController  = TextEditingController();
+  TextEditingController _passwordController  = TextEditingController();
+    // show the password or not
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +43,11 @@ class LoginForm extends StatelessWidget {
                   }
                   return null;
                 },
+                controller: _emailController,
                 decoration: const InputDecoration(
+                  
                   icon: const Icon(Icons.person),
-                    hintText: 'Username',
+                    hintText: 'Username/Email',
                     errorStyle: TextStyle(height: 0.5, fontSize: 0),
                     contentPadding: EdgeInsets.only(
                       left: 10, top: 10, bottom: 10, right: 10),
@@ -56,6 +63,8 @@ class LoginForm extends StatelessWidget {
               width: 300,
               height: 30,
               child: TextFormField(
+                controller: _passwordController,
+                obscureText: _isObscure,
                 decoration: const InputDecoration(
                     icon: const Icon(Icons.key),
                       hintText: 'Password',
@@ -87,10 +96,19 @@ class LoginForm extends StatelessWidget {
                 ),
                 child: const Text('Login'),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Loading'))
                       );
+                    if (_formKey.currentState!.validate()) {
+                      FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: _emailController.text, 
+                        password: _passwordController.text).then((value) {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => home_page()));
+                        }).onError((error, stackTrace) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('The password is invalid'))
+                      );
+                        });
                     }
                   },
               )),
@@ -127,18 +145,23 @@ class LoginForm extends StatelessWidget {
                   },
               )),
             SizedBox(height: 10),
-            //login as counselor / doctor 
-            SizedBox(
-              width: 250,
-              child: new ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(0, 74, 173, 1),
-                ),
-                child: const Text('Sign Up'),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MySignUpPage()));
+            //login as counselor / doctor  
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don't Have Account?",
+                  style: TextStyle(color: Color.fromRGBO(30, 100, 192, 1))),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MySignUpPage()), (Route<dynamic> route) => false);
                   },
-              )),
+                  child: const Text(" Sign Up",
+                  style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1), fontWeight: FontWeight.bold)),
+                )
+
+              ],
+
+            )
           ],
         ),
       ),

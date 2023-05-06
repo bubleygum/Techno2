@@ -15,7 +15,7 @@ class MySignUpPage extends StatelessWidget {
 }
 
 class SignUpForm extends StatelessWidget {
-  //SignUpForm({super.key});
+  SignUpForm({super.key});
   TextEditingController _emailController  = TextEditingController();
   TextEditingController _passwordController  = TextEditingController();
   // show the password or not
@@ -77,6 +77,33 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.mail),
+              hintText: 'Email address',
+              errorStyle: TextStyle(height: 0.5, fontSize: 0),
+              errorMaxLines: 2,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              contentPadding:
+                  EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+              border: OutlineInputBorder(
+                borderSide:
+                    BorderSide(width: 2, color: Color.fromRGBO(0, 0, 0, 0.3)),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'email harus di isi';
+              }
+              return null;
+            },
+          ),
+        ),
+        SizedBox(height: 15),
+        SizedBox(
+          width: 300,
+          height: 30,
+          child: TextFormField(
             controller: _passwordController,
             obscureText: _isObscure,
             decoration: InputDecoration(
@@ -93,7 +120,7 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (value == null || value.isEmpty ) {
                 return 'Password harus di isi';
               }
               return null;
@@ -120,35 +147,8 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (value == null || value.isEmpty || value != _passwordController.text.toString()) {
                 return 'Password harus di isi';
-              }
-              return null;
-            },
-          ),
-        ),
-        SizedBox(height: 15),
-        SizedBox(
-          width: 300,
-          height: 30,
-          child: TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.mail),
-              hintText: 'Email address',
-              errorStyle: TextStyle(height: 0.5, fontSize: 0),
-              errorMaxLines: 2,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              contentPadding:
-                  EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
-              border: OutlineInputBorder(
-                borderSide:
-                    BorderSide(width: 2, color: Color.fromRGBO(0, 0, 0, 0.3)),
-              ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'email harus di isi';
               }
               return null;
             },
@@ -245,9 +245,10 @@ class SignUpForm extends StatelessWidget {
                   FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: _emailController.text, 
                     password: _passwordController.text).then((value){
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MyLogInPage()));
-                    }).onError((error, stackTrace) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => MyLogInPage()), 
+                        (Route<dynamic> route) => false);
+                      }).onError((error, stackTrace) {
                       print("error ${error.toString()}");
                     });
                 }
@@ -255,6 +256,23 @@ class SignUpForm extends StatelessWidget {
                       
               },
             )),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already Have Account?",
+                  style: TextStyle(color: Color.fromRGBO(30, 100, 192, 1))),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MyLogInPage()), (Route<dynamic> route) => false);
+                  },
+                  child: const Text(" Sign In",
+                  style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1), fontWeight: FontWeight.bold)),
+                )
+
+              ],
+
+            )
       ],
     );
     return Form(
