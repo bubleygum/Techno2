@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:apps/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,9 @@ class MySignUpPage extends StatelessWidget {
 class SignUpForm extends StatelessWidget {
   SignUpForm({super.key});
   TextEditingController _emailController  = TextEditingController();
+  TextEditingController _usernameController  = TextEditingController();
   TextEditingController _passwordController  = TextEditingController();
+  TextEditingController _phoneNumberController  = TextEditingController();
   // show the password or not
   bool _isObscure = true;
 
@@ -53,6 +56,7 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
+            controller: _usernameController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Username harus di isi';
@@ -159,7 +163,7 @@ class SignUpForm extends StatelessWidget {
           width: 300,
           height: 30,
           child: TextFormField(
-            controller: phoneCont,
+            controller: _phoneNumberController,
             decoration: const InputDecoration(
               icon: const Icon(Icons.phone),
               hintText: 'Phone number',
@@ -245,6 +249,9 @@ class SignUpForm extends StatelessWidget {
                   FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: _emailController.text, 
                     password: _passwordController.text).then((value){
+                      final username = value.user?.uid.toString();
+                      createUser(username: username);
+                      
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => MyLogInPage()), 
                         (Route<dynamic> route) => false);
@@ -282,4 +289,19 @@ class SignUpForm extends StatelessWidget {
       ),
     );
   }
+  
+  Future createUser({String? username}) async{
+    final docUser = FirebaseFirestore.instance.collection('users').doc(username);
+    final json = {
+      'username': _usernameController.text.toString(),
+      'phone-number': _phoneNumberController.text.toString(), 
+    };
+    //create document and write to DB
+    await docUser
+      .set(json)
+      .whenComplete(() => print("added to database"))
+      .catchError((e) => print(e));
+  }
 }
+
+

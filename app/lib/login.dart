@@ -103,7 +103,7 @@ class LoginForm extends StatelessWidget {
                       FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: _emailController.text, 
                         password: _passwordController.text).then((value) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => home_page()));
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false);
                         }).onError((error, stackTrace) {
                           ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('The password is invalid'))

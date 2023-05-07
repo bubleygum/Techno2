@@ -1,3 +1,4 @@
+import 'package:apps/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/signUp.dart';
@@ -26,6 +27,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     SignUpForm(),
     LoginForm(),
+    ProfilePage()
   ];
 
   void _onItemTapped(int index) {
