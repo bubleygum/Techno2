@@ -1,4 +1,5 @@
-import 'package:apps/profile.dart';
+import 'package:apps/home.dart';
+import 'package:apps/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/signUp.dart';
@@ -25,7 +26,7 @@ class HomeStatefulWidget extends StatefulWidget {
 class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    SignUpForm(),
+    Home(),
     LoginForm(),
     ProfilePage()
   ];
@@ -40,17 +41,19 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.menu),
+        // leading: Icon(Icons.menu),
         title: Text('Page title'),
         actions: [
-          Icon(Icons.favorite),
+          Icon(Icons.history,
+          color: Color.fromRGBO(0, 74, 173, 1)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.search),
+            child: Icon(Icons.notifications,color: Color.fromRGBO(0, 74, 173, 1)),
+            
           ),
-          Icon(Icons.more_vert),
+          Icon(Icons.menu,color: Color.fromRGBO(0, 74, 173, 1)),
         ],
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.white,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
