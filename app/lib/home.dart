@@ -6,12 +6,11 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 final List<String> imgList = [
-  'assets/images/art1.jpg',
-  'assets/images/img1.jpg',
-  'assets/images/img2.jpg',
-  'assets/images/img3.jpg',
-  'assets/images/img4.jpg',
-  'assets/images/img5.jpg',
+  'assets/images/2.png',
+  'assets/images/5.png',
+  'assets/images/3.png',
+  'assets/images/4.png',
+  'assets/images/1.png',
 ];
 
 class Home extends StatelessWidget {
@@ -162,17 +161,10 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         SizedBox(height: 20),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              'Popular Events',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(0, 74, 173, 1)),
-            ),
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          children: <Widget>[
+
           SizedBox(height: 10),
           Container(
             child: SizedBox(
@@ -198,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                 child: Text(
                   'Tutorials',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(0, 74, 173, 1)),
                 ),
