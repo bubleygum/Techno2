@@ -27,7 +27,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    LoginForm(),
+    theraphy(),
     ProfilePage()
   ];
 

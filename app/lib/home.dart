@@ -48,11 +48,12 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => Therapy()));
                     },
                   ),
-                  Text(
-                    'Therapy',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Theraphy',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -67,11 +68,12 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text(
-                    'School',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'School',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -86,11 +88,12 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text(
-                    'Training',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Training',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -105,11 +108,12 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text(
-                    'Consultation',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Consultation',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -124,11 +128,12 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text(
-                    'Caregiver',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Caregiver',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -143,11 +148,12 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text(
-                    'Forum',
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Color.fromRGBO(0, 74, 173, 1),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Forum',
+                      style: TextStyle(
+                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
                     ),
                   ),
                 ],
@@ -155,23 +161,49 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          child: SizedBox(
-            width: double.infinity,
-            child: Container(
-                child: CarouselSlider(
-              options: CarouselOptions(
-                
-                autoPlay: true,
-                aspectRatio: 2.0,
-              ),
-              items: imageSliders,
-            )),
+        SizedBox(height: 20),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Popular Events',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(0, 74, 173, 1)),
+            ),
           ),
-        ),
+          SizedBox(height: 10),
+          Container(
+            child: SizedBox(
+              width: double.infinity,
+              child: Container(
+                  child: CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                ),
+                items: imageSliders,
+              )),
+            ),
+          ),
+        ]),
+        SizedBox(height: 20),
         Expanded(
           child: ListView(
             children: <Widget>[
+              FittedBox(
+                alignment: Alignment.topLeft,
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Tutorials',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(0, 74, 173, 1)),
+                ),
+              ),
+              SizedBox(height: 10),
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -203,12 +235,23 @@ class HomeScreen extends StatelessWidget {
               Card(
                 elevation: 5,
                 child: ListTile(
-                  title: Text(
-                    'What is Training?',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(0, 74, 173, 1)),
-                  ),
+                  title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'What is Training?',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(0, 74, 173, 1)),
+                        ),
+                        // Image.network('assets/images/doctor.png',
+                        //   width: 100, fit: BoxFit.cover),
+                        Text(
+                          'Training is a place where kids or adults with down syndrome can learn new things and gain new skills.\nClick the tutorial button to learn how to use it!',
+                          style:
+                              TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+                        ),
+                      ]),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
