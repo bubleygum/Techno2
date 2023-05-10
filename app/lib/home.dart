@@ -155,7 +155,8 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
+        Container(
+          child: SizedBox(
             width: double.infinity,
             child: Container(
                 child: CarouselSlider(
@@ -167,6 +168,7 @@ class HomeScreen extends StatelessWidget {
               items: imageSliders,
             )),
           ),
+        ),
         Expanded(
           child: ListView(
             children: <Widget>[
