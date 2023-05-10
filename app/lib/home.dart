@@ -155,19 +155,18 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        Expanded(
-          child: SizedBox(
+        SizedBox(
             width: double.infinity,
             child: Container(
                 child: CarouselSlider(
               options: CarouselOptions(
+                
                 autoPlay: true,
                 aspectRatio: 2.0,
               ),
               items: imageSliders,
             )),
           ),
-        ),
         Expanded(
           child: ListView(
             children: <Widget>[
