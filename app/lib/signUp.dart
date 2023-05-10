@@ -239,7 +239,7 @@ class SignUpForm extends StatelessWidget {
         SizedBox(height: 20),
         SizedBox(
             width: 250,
-            child: new ElevatedButton(
+            child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Color.fromRGBO(0, 74, 173, 1),
               ),

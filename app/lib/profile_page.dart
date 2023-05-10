@@ -23,7 +23,11 @@ class MyProfilePage extends StatelessWidget {
 class ProfilePage extends StatelessWidget {
   final UserUID = FirebaseAuth.instance.currentUser?.uid;
   
-  
+  // Stream<List<User>> readUsers() => FirebaseFirestore.instance
+  //   .collection('users')
+  //   .snapshots()
+  //   .map((snapshot)=> 
+  //       snapshot.docs.map((doc) => User.fromJson(doc.data()).toList()); 
   @override
   Widget build(BuildContext context) {
     // final user = UserData(
