@@ -11,17 +11,19 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: Text('Sign Up')),
-      body: home(),
+      body: HomeScreen(),
     );
   }
 }
 
-class home extends StatelessWidget {
-  home({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
+    return Column(
+      children: <Widget>[
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
@@ -31,9 +33,18 @@ class home extends StatelessWidget {
                     icon: FaIcon(FontAwesomeIcons.handHoldingHeart),
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => Therapy()));},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Therapy()));
+                    },
                   ),
-                  Text('Therapy', style: TextStyle(fontSize: 10.0,color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'Therapy',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -46,7 +57,13 @@ class home extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text('School', style: TextStyle(fontSize: 10.0,color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'School',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -59,7 +76,13 @@ class home extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text('Training', style: TextStyle(fontSize: 10.0,color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'Training',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -72,7 +95,13 @@ class home extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text('Consultation', style: TextStyle(fontSize: 10.0,color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'Consultation',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -85,11 +114,17 @@ class home extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text('Caregiver', style: TextStyle(fontSize: 10.0,color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'Caregiver',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
-             Container(
+            Container(
               child: Column(
                 children: <Widget>[
                   IconButton(
@@ -98,12 +133,98 @@ class home extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {},
                   ),
-                  Text('Forum', style: TextStyle(fontSize: 10.0, color: Color.fromRGBO(0, 74, 173, 1),),),
+                  Text(
+                    'Forum',
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ]),
+          ],
+        ),
+        Expanded(
+          child: ListView(
+            children: <Widget>[
+              Card(
+                child: ListTile(
+                  title: Text('Back To School Program'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text('New Enrollment Discount'),
+                      SizedBox(
+                        width: 100,
+                          child: ElevatedButton(
+                              child: Text('Details'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                              onPressed: () {}))
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: Text('What is Training?'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 100,
+                          child: ElevatedButton(
+                              child: Text('Tutorial'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                              onPressed: () {}))
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: Text('What is Consultation?'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 100,
+                          child: ElevatedButton(
+                              child: Text('Tutorial'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                              onPressed: () {}))
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: Text('What is Caregiver?'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 100,
+                          child: ElevatedButton(
+                              child: Text('Tutorial'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                              onPressed: () {}))
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
-
