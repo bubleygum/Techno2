@@ -9,9 +9,9 @@ final List<String> imgList = [
   'assets/images/art1.jpg',
   'assets/images/img1.jpg',
   'assets/images/img2.jpg',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  'assets/images/img3.jpg',
+  'assets/images/img4.jpg',
+  'assets/images/img5.jpg',
 ];
 
 class Home extends StatelessWidget {
@@ -156,26 +156,37 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         Expanded(
-          child: Container(
-              child: CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: true,
-              aspectRatio: 2.0,
-              enlargeCenterPage: true,
-            ),
-            items: imageSliders,
-          )),
+          child: SizedBox(
+            width: double.infinity,
+            child: Container(
+                child: CarouselSlider(
+              options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+              ),
+              items: imageSliders,
+            )),
+          ),
         ),
         Expanded(
           child: ListView(
             children: <Widget>[
               Card(
+                elevation: 5,
                 child: ListTile(
-                  title: Text('Back To School Program'),
+                  title: Text(
+                    'Back To School Program',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 74, 173, 1)),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text('New Enrollment Discount'),
+                      Text(
+                        'New Enrollment Discount',
+                        style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+                      ),
                       SizedBox(
                           width: 100,
                           child: ElevatedButton(
@@ -189,8 +200,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Card(
+                elevation: 5,
                 child: ListTile(
-                  title: Text('What is Training?'),
+                  title: Text(
+                    'What is Training?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 74, 173, 1)),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -207,8 +224,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Card(
+                elevation: 5,
                 child: ListTile(
-                  title: Text('What is Consultation?'),
+                  title: Text(
+                    'What is Consultation?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 74, 173, 1)),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -225,8 +248,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Card(
+                elevation: 5,
                 child: ListTile(
-                  title: Text('What is Caregiver?'),
+                  title: Text(
+                    'What is Caregiver?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 74, 173, 1)),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -250,26 +279,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ImageSliderDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Image slider demo')),
-      body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(),
-        items: imgList
-            .map((item) => Container(
-                  child: Center(
-                      child:
-                          Image.network(item, fit: BoxFit.cover, width: 1000)),
-                ))
-            .toList(),
-      )),
-    );
-  }
-}
-
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
           child: Container(
@@ -285,25 +294,25 @@ final List<Widget> imageSliders = imgList
                       right: 0.0,
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
+                            // gradient: LinearGradient(
+                            //   colors: [
+                            //     Color.fromARGB(200, 0, 0, 0),
+                            //     Color.fromARGB(0, 0, 0, 0)
+                            //   ],
+                            //   begin: Alignment.bottomCenter,
+                            //   end: Alignment.topCenter,
+                            // ),
+                            ),
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        // child: Text(
+                        //   'No. ${imgList.indexOf(item)} image',
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 20.0,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
                       ),
                     ),
                   ],
