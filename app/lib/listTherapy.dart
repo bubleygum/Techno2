@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
-import 'package:apps/profile_page.dart';
+import 'package:apps/pictureExchange.dart';
 
 class listTherapyState extends StatelessWidget {
   const listTherapyState({Key? key}) : super(key: key);
@@ -43,7 +43,10 @@ class listTeraphyWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Color.fromRGBO(0, 74, 173, 1)),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => pictureExchange()));
+            },
           ),
         ),
         Card(

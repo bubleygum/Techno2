@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
-import 'package:apps/profile_page.dart';
 
-class listTherapyState extends StatelessWidget {
-  const listTherapyState({Key? key}) : super(key: key);
+
+class pictureExchange extends StatelessWidget {
+  const pictureExchange({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,14 @@ class listTherapyState extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: Center(
-        child: listTeraphyWidget(),
+        child: pictureExchangeWidget(),
       ),
     );
   }
 }
 
-class listTeraphyWidget extends StatelessWidget {
-  const listTeraphyWidget({Key? key}) : super(key: key);
+class pictureExchangeWidget extends StatelessWidget {
+  const pictureExchangeWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

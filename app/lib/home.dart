@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
+import 'package:apps/schoolList.dart';
 import 'package:apps/listTherapy.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -42,8 +43,8 @@ class HomeScreen extends StatelessWidget {
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => listTherapyState()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => listTherapyState()));
                     },
                   ),
                   FittedBox(
@@ -64,7 +65,10 @@ class HomeScreen extends StatelessWidget {
                     icon: FaIcon(FontAwesomeIcons.school),
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => schoolList()));
+                    },
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,
