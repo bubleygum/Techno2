@@ -5,10 +5,10 @@ import 'package:apps/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart'; // new
-import 'package:go_router/go_router.dart';               // new
-import 'app_state.dart';                                 // new
-import 'package:provider/provider.dart';                 // new
+import 'package:firebase_ui_auth/firebase_ui_auth.dart'; 
+import 'package:go_router/go_router.dart';              
+import 'app_state.dart';                                 
+import 'package:provider/provider.dart';                 
 Future<void>  main() async{
   //initialize
   WidgetsFlutterBinding.ensureInitialized();

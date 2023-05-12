@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
-import 'package:apps/theraphy.dart';
+import 'package:apps/listTherapy.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -19,7 +19,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text('Sign Up')),
       body: HomeScreen(),
     );
   }
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Therapy()));
+                          MaterialPageRoute(builder: (context) => listTherapyState()));
                     },
                   ),
                   FittedBox(
@@ -160,30 +159,29 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 20),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start, 
-          children: <Widget>[
-
-          SizedBox(height: 10),
-          Container(
-            child: SizedBox(
-              width: double.infinity,
-              child: Container(
-                  child: CarouselSlider(
-                options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                ),
-                items: imageSliders,
-              )),
-            ),
-          ),
-        ]),
-        SizedBox(height: 20),
         Expanded(
           child: ListView(
             children: <Widget>[
+              SizedBox(height: 20),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    Container(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Container(
+                            child: CarouselSlider(
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 2.0,
+                          ),
+                          items: imageSliders,
+                        )),
+                      ),
+                    ),
+                  ]),
+              SizedBox(height: 20),
               FittedBox(
                 alignment: Alignment.topLeft,
                 fit: BoxFit.scaleDown,
@@ -236,8 +234,6 @@ class HomeScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(0, 74, 173, 1)),
                         ),
-                        // Image.network('assets/images/doctor.png',
-                        //   width: 100, fit: BoxFit.cover),
                         Text(
                           'Training is a place where kids or adults with down syndrome can learn new things and gain new skills.\nClick the tutorial button to learn how to use it!',
                           style:
@@ -262,12 +258,21 @@ class HomeScreen extends StatelessWidget {
               Card(
                 elevation: 5,
                 child: ListTile(
-                  title: Text(
-                    'What is Consultation?',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(0, 74, 173, 1)),
-                  ),
+                  title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'What is Consultation?',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(0, 74, 173, 1)),
+                        ),
+                        Text(
+                          'Consultation is a place where you can find the best doctor to consult with! \nClick the tutorial button to learn how to use it!',
+                          style:
+                              TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+                        ),
+                      ]),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[

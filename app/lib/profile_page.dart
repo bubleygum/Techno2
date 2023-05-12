@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/signUp.dart';
 import 'package:apps/login.dart';
-import 'package:apps/theraphy.dart';
+import 'package:apps/listTherapy.dart';
 
 class MyProfilePage extends StatelessWidget {
   const MyProfilePage({Key? key}) : super(key: key);

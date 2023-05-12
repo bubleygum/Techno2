@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/signUp.dart';
 import 'package:apps/login.dart';
-import 'package:apps/theraphy.dart';
+import 'package:apps/listTherapy.dart';
 
 class home_page extends StatelessWidget {
   const home_page({super.key});
@@ -27,7 +27,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    theraphy(),
+    listTherapyState(),
     ProfilePage()
   ];
 
@@ -42,7 +42,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         // leading: Icon(Icons.menu),
-        title: Text('Page title'),
+        // title: Text('Page title'),
         actions: [
           Icon(Icons.history,
           color: Color.fromRGBO(0, 74, 173, 1)),
