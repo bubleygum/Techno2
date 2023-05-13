@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:apps/firebase_options.dart';
 import 'package:apps/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart'; 
-import 'package:go_router/go_router.dart';              
+import 'package:flutter/material.dart';            
 import 'app_state.dart';                                 
 import 'package:provider/provider.dart';                 
 Future<void>  main() async{
@@ -44,5 +39,4 @@ class MainApp extends StatelessWidget {
 }
 
 
-// end of GoRouter configuration
 

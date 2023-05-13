@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
-import 'package:apps/schoolList.dart';
+import 'package:apps/schoolList_widget.dart';
 import 'package:apps/listTherapy.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
