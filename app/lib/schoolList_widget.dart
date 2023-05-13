@@ -36,6 +36,7 @@ class schoolList extends StatelessWidget {
                       String lvAkreditasi = dsData["akreditasi"];
                       String lvAlamat = dsData["alamat"];
                       String lvDetail = dsData["detail"];
+                      String lvnoTelp= dsData["noTelp"];
                       return Card(
                         elevation: 5,
                         child: ListTile(
@@ -82,7 +83,11 @@ class schoolList extends StatelessWidget {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         schoolDetail(
-                                                            text: lvNama)));
+                                                            nama: lvNama,
+                                                            alamat: lvAlamat,
+                                                            akreditasi: lvAkreditasi,
+                                                            detail: lvDetail,
+                                                            noTelp: lvnoTelp)));
                                           }))
                                 ],
                               ),
