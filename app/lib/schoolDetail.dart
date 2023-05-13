@@ -32,7 +32,7 @@ class schoolDetail extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Flexible(
               child: Image.network(
@@ -40,39 +40,48 @@ class schoolDetail extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
-              width: 500,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      nama,
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 74, 173, 1),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32),
-                    ),
-                    Text(
-                      'Akreditasi: $akreditasi',
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
-                    ),
-                    Text(
-                      'Alamat: $alamat',
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
-                    ),
-                    Text(
-                      'Nomor Telepon: $noTelp',
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
-                    ),
-                    Text(
-                      'Detail: $detail',
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
-                    ),
-                  ]),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Text(
+                nama,
+                style: TextStyle(
+                  color: Color.fromRGBO(0, 74, 173, 1),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                'Akreditasi: $akreditasi',
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                'Alamat: $alamat',
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                'Nomor Telepon: $noTelp',
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                'Detail: $detail',
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 74, 173, 1), fontSize: 20),
+              ),
             ),
           ],
         ),
