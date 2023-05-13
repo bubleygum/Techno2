@@ -36,11 +36,11 @@ class schoolListWidget extends StatelessWidget {
         Card(
           elevation: 5,
           child: ListTile(
-            leading: Expanded(
+            leading: Flexible(
               child: Image.network(
                 'assets/images/art1.jpg',
                 fit: BoxFit.cover,
-                width: 1000
+                width: double.infinity,
               ),
             ),
             title: Text('School Name'),

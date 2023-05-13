@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
-
+import 'package:responsive_grid/responsive_grid.dart';
 
 class pictureExchange extends StatelessWidget {
   const pictureExchange({Key? key}) : super(key: key);
@@ -32,6 +32,20 @@ class pictureExchangeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column();
+    return Column(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Text(
+                    'Storybook Activity',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(0, 74, 173, 1)),
+                  ),
+          ],
+        ),
+      ],
+    );
   }
 }
+
