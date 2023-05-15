@@ -1,3 +1,4 @@
+import 'package:apps/workshopList_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
 import 'package:apps/schoolList_widget.dart';
@@ -88,7 +89,10 @@ class HomeScreen extends StatelessWidget {
                     icon: FaIcon(FontAwesomeIcons.userPlus),
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => workshopList()));
+                    },
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,

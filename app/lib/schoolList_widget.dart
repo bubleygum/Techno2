@@ -24,7 +24,7 @@ class schoolList extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         body: StreamBuilder<QuerySnapshot>(
-            stream: Database.getData(),
+            stream: Database.getDataSekolah(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('error');
