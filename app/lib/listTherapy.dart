@@ -45,7 +45,7 @@ class listTeraphyWidget extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => pictureExchange()));
+                          MaterialPageRoute(builder: (context) => PictureExchange()));
             },
           ),
         ),
