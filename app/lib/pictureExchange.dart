@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-
-import 'package:flutter/material.dart';
-import 'package:responsive_grid/responsive_grid.dart';
+import 'package:apps/emotionMeter.dart';
 
 class PictureExchange extends StatelessWidget {
   const PictureExchange({Key? key}) : super(key: key);
@@ -56,8 +54,8 @@ class PictureExchangeWidget extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Handle button press here
-                print('Button pressed: ${index + 1}');
+                Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => emotionMeter()));
               },
               child: Text(buttonLabels[index]),
             ),
