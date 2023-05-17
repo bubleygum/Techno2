@@ -249,8 +249,8 @@ class SignUpForm extends StatelessWidget {
                   FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: _emailController.text, 
                     password: _passwordController.text).then((value){
-                      final username = value.user?.uid.toString();
-                      createUser(username: username);
+                      final UserUID = value.user?.uid.toString();
+                      createUser(userUID: UserUID);
                       
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => MyLogInPage()), 
@@ -290,11 +290,12 @@ class SignUpForm extends StatelessWidget {
     );
   }
   
-  Future createUser({String? username}) async{
-    final docUser = FirebaseFirestore.instance.collection('users').doc(username);
+  Future createUser({String? userUID}) async{
+    final docUser = FirebaseFirestore.instance.collection('users').doc(userUID);
     final json = {
       'username': _usernameController.text.toString(),
       'phone-number': _phoneNumberController.text.toString(), 
+      'email': _emailController.text.toString()
     };
     //create document and write to DB
     await docUser
