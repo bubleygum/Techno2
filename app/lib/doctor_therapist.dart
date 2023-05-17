@@ -2,34 +2,30 @@ import 'package:apps/home.dart';
 import 'package:apps/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:apps/signUp.dart';
-import 'package:apps/login.dart';
 import 'package:apps/listTherapy.dart';
 
-
-class home_page extends StatelessWidget {
-  const home_page({super.key});
+class doctor_therapist extends StatelessWidget {
+  const doctor_therapist({super.key});
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomeStatefulWidget(),
+      home: doctor_therapistStatefulWidget(),
     );
   }
 }
 
-class HomeStatefulWidget extends StatefulWidget {
-  const HomeStatefulWidget({super.key});
+class doctor_therapistStatefulWidget extends StatefulWidget {
+  const doctor_therapistStatefulWidget({super.key});
 
   @override
-  State<HomeStatefulWidget> createState() => HomeStatefulWidgetState();
+  State<doctor_therapistStatefulWidget> createState() => doctorTherapistStatefulWidget();
 }
 
-class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
+class doctorTherapistStatefulWidget extends State<doctor_therapistStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     listTherapyState(),
-    ProfilePage()
   ];
 
   void _onItemTapped(int index) {
@@ -63,15 +59,11 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Doctor',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.record_voice_over),
-            label: 'Therapy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Therapist',
           ),
         ],
         currentIndex: _selectedIndex,
