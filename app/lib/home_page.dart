@@ -29,7 +29,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     listTherapyState(),
-    ProfilePage()
+    MyProfilePage()
   ];
 
   void _onItemTapped(int index) {

@@ -1,3 +1,4 @@
+import 'package:apps/doctorList.dart';
 import 'package:apps/workshopList_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => doctor_therapist()));
+                          builder: (context) => DoctorList()));
                     },
                   ),
                   FittedBox(

@@ -6,8 +6,8 @@ import 'package:apps/home.dart';
 
 import 'dbservices.dart';
 
-class schoolList extends StatelessWidget {
-  const schoolList({Key? key}) : super(key: key);
+class DoctorList extends StatelessWidget {
+  const DoctorList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class schoolList extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'School Recommendation',
+            'Konsultasi Dokter',
             style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
           ),
           backgroundColor: Colors.white,
         ),
         body: StreamBuilder<QuerySnapshot>(
-            stream: Database.getDataSekolah(),
+            stream: Database.getDataDokter(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('error');
@@ -32,11 +32,11 @@ class schoolList extends StatelessWidget {
                 return ListView.separated(
                     itemBuilder: (context, index) {
                       DocumentSnapshot dsData = snapshot.data!.docs[index];
-                      String lvNama = dsData["namaSekolah"];
-                      String lvAkreditasi = dsData["akreditasi"];
-                      String lvAlamat = dsData["alamat"];
-                      String lvDetail = dsData["detail"];
-                      String lvnoTelp= dsData["noTelp"];
+                      String lvNama = dsData["nama"];
+                      String lvJabatan = dsData["jabatan"];
+                      String lvPengalaman = dsData["pengalaman"];
+                      String lvRating = dsData["rating"];
+                      String lvHargaSesi= dsData["hargaSesi"];
                       return Card(
                         elevation: 5,
                         child: ListTile(
@@ -56,13 +56,13 @@ class schoolList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Akreditasi: $lvAkreditasi',
+                                '$lvJabatan',
                                 style: TextStyle(
                                   color: Color.fromRGBO(0, 74, 173, 1),
                                 ),
                               ),
                               Text(
-                                'Alamat: $lvAlamat',
+                                '$lvPengalaman',
                                 style: TextStyle(
                                   color: Color.fromRGBO(0, 74, 173, 1),
                                 ),
@@ -79,15 +79,15 @@ class schoolList extends StatelessWidget {
                                                 Color.fromRGBO(0, 74, 173, 1),
                                           ),
                                           onPressed: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        schoolDetail(
-                                                            nama: lvNama,
-                                                            alamat: lvAlamat,
-                                                            akreditasi: lvAkreditasi,
-                                                            detail: lvDetail,
-                                                            noTelp: lvnoTelp)));
+                                            // Navigator.of(context).push(
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             schoolDetail(
+                                            //                 nama: lvNama,
+                                            //                 alamat: lvAlamat,
+                                            //                 akreditasi: lvAkreditasi,
+                                            //                 detail: lvDetail,
+                                            //                 noTelp: lvnoTelp)));
                                           }))
                                 ],
                               ),

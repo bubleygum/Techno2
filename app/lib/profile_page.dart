@@ -11,22 +11,20 @@ import 'package:apps/signUp.dart';
 import 'package:apps/login.dart';
 import 'package:apps/listTherapy.dart';
 
-class MyProfilePage extends StatelessWidget {
+class MyProfilePage extends StatefulWidget {
   const MyProfilePage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ProfilePage(),
-    );
-  }
+    State<MyProfilePage> createState() => ProfilePage();
+  
 }
 
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends State<MyProfilePage> {
   final UserUID = FirebaseAuth.instance.currentUser?.uid;
   String? username = "";
   String? phoneNumber = "";
-  var userData = null;
+  var userData = UserData(username: '', phoneNumber: '', email: '');
+  bool _isLoading = true;
   Future _getUserData() async 
   {
     await FirebaseFirestore.instance.collection('users')
@@ -36,36 +34,76 @@ class ProfilePage extends StatelessWidget {
       {
         if(snapshot.exists)
         {  
-          userData = UserData(
+          setState(() {
+            userData = UserData(
             username: snapshot.data()!["username"], 
             phoneNumber: snapshot.data()!["phone-number"],
             email: snapshot.data()!["email"]
             );
-          username = snapshot.data()!["username"];
+            _isLoading = false;
+          });
+          
         }
 
       });
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getUserData();
+  }
   @override
   Widget build(BuildContext context) {
-    _getUserData();
-    
-    print(username);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: ListView(
+      body: _isLoading
+        ? Center(child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(
+                    Color.fromRGBO(0, 74, 173, 1),
+                  ),) 
+        )
+        : ListView(
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
             imagePath: 'assets/images/art1.jpg', 
             onClicked: () async{}
           ),
+          const SizedBox(height: 24),
+          buildName(userData),
+          const SizedBox(height: 24),
+          Center(child: buildButton()),
 
         ],
       )
+      
     );
   }
 
-  //Widget buildName(User)
+  Widget buildName(UserData _userData) => Column(
+        children: [
+          Text(
+            _userData.username,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            _userData.email,
+            style: TextStyle(color: Colors.grey),
+          )
+        ],
+  );
+
+  Widget buildButton() => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Color.fromRGBO(0, 74, 173, 1),
+    ),
+        child: const Text('Settings'),
+          onPressed: () {
+
+          },
+      );
 
 }
