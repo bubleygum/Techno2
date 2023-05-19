@@ -100,9 +100,10 @@ class ProfilePage extends State<MyProfilePage> {
     style: ElevatedButton.styleFrom(
       primary: Color.fromRGBO(0, 74, 173, 1),
     ),
-        child: const Text('Settings'),
+        child: const Text('LogOut'),
           onPressed: () {
-
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MyLogInPage()), (Route<dynamic> route) => false);
+                  
           },
       );
 
