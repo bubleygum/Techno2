@@ -3,8 +3,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 import 'package:apps/pictureExchange.dart';
 
-class listTherapyState extends StatelessWidget {
-  const listTherapyState({Key? key}) : super(key: key);
+class ListTherapy extends StatelessWidget {
+  const ListTherapy({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

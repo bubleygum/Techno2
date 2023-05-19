@@ -1,5 +1,7 @@
+import 'package:apps/doctorList.dart';
 import 'package:apps/home.dart';
 import 'package:apps/profile_page.dart';
+import 'package:apps/therapistList.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/listTherapy.dart';
@@ -24,8 +26,8 @@ class doctor_therapistStatefulWidget extends StatefulWidget {
 class doctorTherapistStatefulWidget extends State<doctor_therapistStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    listTherapyState(),
+    DoctorList(),
+    TherapistList(),
   ];
 
   void _onItemTapped(int index) {
@@ -38,8 +40,14 @@ class doctorTherapistStatefulWidget extends State<doctor_therapistStatefulWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: Icon(Icons.menu),
-        // title: Text('Page title'),
+          leading: IconButton(
+            icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text(
+            'Konsultasi',
+            style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+          ),
         actions: [
           Icon(Icons.history,
           color: Color.fromRGBO(0, 74, 173, 1)),

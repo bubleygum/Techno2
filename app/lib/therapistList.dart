@@ -6,8 +6,8 @@ import 'package:apps/home.dart';
 
 import 'dbservices.dart';
 
-class DoctorList extends StatelessWidget {
-  const DoctorList({Key? key}) : super(key: key);
+class TherapistList extends StatelessWidget {
+  const TherapistList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

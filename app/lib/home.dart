@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => listTherapyState()));
+                          builder: (context) => ListTherapy()));
                     },
                   ),
                   FittedBox(
@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DoctorList()));
+                          builder: (context) => doctor_therapist()));
                     },
                   ),
                   FittedBox(
