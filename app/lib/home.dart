@@ -9,6 +9,8 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:apps/doctor_therapist.dart';
 
+import 'caregiver_list.dart';
+
 final List<String> imgList = [
   'assets/images/2.png',
   'assets/images/5.png',
@@ -137,7 +139,10 @@ class HomeScreen extends StatelessWidget {
                     icon: FaIcon(FontAwesomeIcons.userNurse),
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => caregiver_list()));
+                    },
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,

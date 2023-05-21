@@ -1,19 +1,30 @@
-import 'package:apps/ConsultCheckOut.dart';
 import 'package:apps/schoolDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
+
 import 'dbservices.dart';
 
-class DoctorList extends StatelessWidget {
-  const DoctorList({Key? key}) : super(key: key);
+class caregiver_list extends StatelessWidget {
+  const caregiver_list({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text(
+            'Caregiver',
+            style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+          ),
+          backgroundColor: Colors.white,
+        ),
         body: StreamBuilder<QuerySnapshot>(
-            stream: Database.getDataDokter(),
+            stream: Database.getDataCaregiver(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('error');
@@ -22,10 +33,9 @@ class DoctorList extends StatelessWidget {
                     itemBuilder: (context, index) {
                       DocumentSnapshot dsData = snapshot.data!.docs[index];
                       String lvNama = dsData["nama"];
-                      String lvJabatan = dsData["jabatan"];
-                      String lvPengalaman = dsData["pengalaman"];
                       String lvRating = dsData["rating"];
                       String lvHargaSesi= dsData["hargaSesi"];
+                      String lvNoTelp = dsData["noTelp"];
                       return Card(
                         elevation: 5,
                         child: Container(
@@ -62,39 +72,9 @@ class DoctorList extends StatelessWidget {
                                                 color: Color.fromRGBO(0, 74, 173, 1),
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Text(
-                                            lvJabatan,
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(0, 74, 173, 1),
-                                                fontSize: 10),
-                                          ),
+                                          
                                           Row(crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                decoration:  BoxDecoration (
-                                                  color:  Color(0x35004aad),
-                                                  borderRadius:  BorderRadius.circular(12),
-                                                ),
-                                                child: 
-                                                RichText(
-                                                  text: TextSpan(
-                                                    children: <InlineSpan>[
-                                                      WidgetSpan(
-                                                        alignment: PlaceholderAlignment.middle, 
-                                                        child: Icon(Icons.badge, size: 9,),
-                                                      ),
-                                                      TextSpan(
-                                                        text: " " + lvPengalaman + " tahun",
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 9),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                                  
-                                              ),
-                                              const SizedBox(width: 5), 
                                               Container(
                                                 decoration:  BoxDecoration (
                                                   color:  Color(0x35004aad),
@@ -122,7 +102,7 @@ class DoctorList extends StatelessWidget {
                                             ],
                                           ),
                                           Text(
-                                            "Rp. " + lvHargaSesi,
+                                            "Biaya / Jam Rp. " + lvHargaSesi,
                                             style: TextStyle(
                                                 color: Color.fromRGBO(60, 60, 60, 1),
                                                 
@@ -147,15 +127,15 @@ class DoctorList extends StatelessWidget {
                                                         Color.fromRGBO(0, 74, 173, 1),
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ConsultCheckOut(
-                                                                    nama: lvNama,
-                                                                    jabatan: lvJabatan,
-                                                                    pengalaman: lvPengalaman,
-                                                                    hargaSesi: lvHargaSesi,
-                                                                    rating: lvRating)));
+                                                    // Navigator.of(context).push(
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) =>
+                                                    //             schoolDetail(
+                                                    //                 nama: lvNama,
+                                                    //                 alamat: lvAlamat,
+                                                    //                 akreditasi: lvAkreditasi,
+                                                    //                 detail: lvDetail,
+                                                    //                 noTelp: lvnoTelp)));
                                                   }))
                                         ],
                                       ),

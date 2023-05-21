@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 
+import 'ConsultCheckOut.dart';
 import 'dbservices.dart';
 
 class TherapistList extends StatelessWidget {
@@ -147,15 +148,15 @@ class TherapistList extends StatelessWidget {
                                                         Color.fromRGBO(0, 74, 173, 1),
                                                   ),
                                                   onPressed: () {
-                                                    // Navigator.of(context).push(
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             schoolDetail(
-                                                    //                 nama: lvNama,
-                                                    //                 alamat: lvAlamat,
-                                                    //                 akreditasi: lvAkreditasi,
-                                                    //                 detail: lvDetail,
-                                                    //                 noTelp: lvnoTelp)));
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ConsultCheckOut(
+                                                                    nama: lvNama,
+                                                                    jabatan: lvJabatan,
+                                                                    pengalaman: lvPengalaman,
+                                                                    hargaSesi: lvHargaSesi,
+                                                                    rating: lvRating)));
                                                   }))
                                         ],
                                       ),

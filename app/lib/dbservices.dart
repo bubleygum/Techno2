@@ -7,6 +7,8 @@ CollectionReference tabelSekolah = FirebaseFirestore.instance.collection("school
 CollectionReference tabelPelatihan = FirebaseFirestore.instance.collection("workshopList");
 CollectionReference tabelDokter = FirebaseFirestore.instance.collection("doctorList");
 CollectionReference tabelTerapis = FirebaseFirestore.instance.collection("therapistList");
+
+CollectionReference tabelCaregiver = FirebaseFirestore.instance.collection("caregiverList");
 class Database{
   //read data list sekolah 
   static Stream<QuerySnapshot> getDataSekolah(){
@@ -44,5 +46,11 @@ class Database{
   static Stream<QuerySnapshot> getDataTerapis(){
     return tabelTerapis.snapshots();
   }
+
+  //read data list caregiver
+  static Stream<QuerySnapshot> getDataCaregiver(){
+    return tabelCaregiver.snapshots();
+  }
+
 }
 
