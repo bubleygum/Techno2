@@ -1,4 +1,5 @@
 import 'package:apps/firebase_options.dart';
+import 'package:apps/home_page.dart';
 import 'package:apps/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';            
@@ -12,7 +13,8 @@ Future<void>  main() async{
   );
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
-    builder: ((context, child) => const MainApp()),
+    //builder: ((context, child) => const MainApp()),
+    builder: ((context, child) => const home_page()),
   ));
 }
 

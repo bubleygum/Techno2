@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/listTherapy.dart';
 
+import 'home_page.dart';
+
 class doctor_therapist extends StatelessWidget {
   const doctor_therapist({super.key});
   @override
@@ -42,7 +44,7 @@ class doctorTherapistStatefulWidget extends State<doctor_therapistStatefulWidget
       appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false),
           ),
           title: Text(
             'Konsultasi',

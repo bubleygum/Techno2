@@ -6,6 +6,7 @@ import 'DataClass/workshop_data.dart';
 CollectionReference tabelSekolah = FirebaseFirestore.instance.collection("schoolList");
 CollectionReference tabelPelatihan = FirebaseFirestore.instance.collection("workshopList");
 CollectionReference tabelDokter = FirebaseFirestore.instance.collection("doctorList");
+CollectionReference tabelTerapis = FirebaseFirestore.instance.collection("therapistList");
 class Database{
   //read data list sekolah 
   static Stream<QuerySnapshot> getDataSekolah(){
@@ -37,6 +38,11 @@ class Database{
   //read data list dokter
   static Stream<QuerySnapshot> getDataDokter(){
     return tabelDokter.snapshots();
+  }
+
+  //read data list terapis
+  static Stream<QuerySnapshot> getDataTerapis(){
+    return tabelTerapis.snapshots();
   }
 }
 
