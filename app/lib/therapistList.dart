@@ -151,7 +151,7 @@ class TherapistList extends StatelessWidget {
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ConsultCheckOut(
+                                                                ConsultCheckOutPage(
                                                                     nama: lvNama,
                                                                     jabatan: lvJabatan,
                                                                     pengalaman: lvPengalaman,

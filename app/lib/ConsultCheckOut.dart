@@ -5,23 +5,35 @@ import 'package:apps/home.dart';
 
 import 'dbservices.dart';
 
-class ConsultCheckOut extends StatelessWidget {
+
+class ConsultCheckOutPage extends StatefulWidget {
   final String nama;
   final String jabatan;
   final String pengalaman;
   final String rating;
   final String hargaSesi;
-  const ConsultCheckOut(
-      {Key? key,
-      required this.nama,
-      required this.jabatan,
-      required this.pengalaman,
-      required this.rating,
-      required this.hargaSesi})
-      : super(key: key);
+  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi}) : super(key: key);
+  @override
+    State<ConsultCheckOutPage> createState() => ConsultCheckOut();
+  
+}
+class ConsultCheckOut extends State<ConsultCheckOutPage> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime _dateTime = DateTime.now();
+    void _showDatePicker(){
+    showDatePicker(
+      context: context, 
+      initialDate: DateTime.now(), 
+      firstDate: DateTime(2023), 
+      lastDate: DateTime(2025)
+      ).then((value){
+        setState(() {
+          _dateTime = value!;
+        });
+    });;
+    }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -56,73 +68,19 @@ class ConsultCheckOut extends StatelessWidget {
                     // ),
                     const SizedBox(height: 4),
                     Text(
-                      nama,
+                      widget.nama,
                       style: TextStyle(
                           color: Color.fromRGBO(0, 74, 173, 1),
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      jabatan,
+                      widget.jabatan,
                       style: TextStyle(
                           color: Color.fromRGBO(0, 74, 173, 1),
                           fontSize: 10),
                     ),
-                    Row(crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration:  BoxDecoration (
-                            color:  Color(0x35004aad),
-                            borderRadius:  BorderRadius.circular(12),
-                          ),
-                          child: 
-                          RichText(
-                            text: TextSpan(
-                              children: <InlineSpan>[
-                                WidgetSpan(
-                                  alignment: PlaceholderAlignment.middle, 
-                                  child: Icon(Icons.badge, size: 9,),
-                                ),
-                                TextSpan(
-                                  text: " " + pengalaman + " tahun",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 9),
-                                ),
-                              ],
-                            ),
-                          )
-                            
-                        ),
-                        const SizedBox(width: 5), 
-                        Container(
-                          decoration:  BoxDecoration (
-                            color:  Color(0x35004aad),
-                            borderRadius:  BorderRadius.circular(12),
-                          ),
-                          child: 
-                            RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  alignment: PlaceholderAlignment.middle, 
-                                  child: Icon(Icons.thumb_up, size: 9,),
-                                ),
-                                TextSpan(
-                                  text: " " + rating + "%",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 9),
-                                ),
-                              ],
-                            ),
-                          )
-                            
-                        )
-                      ],
-                    ),
-                    
-
                   ],
+
                 ),
               ],
             ),
@@ -144,7 +102,7 @@ class ConsultCheckOut extends StatelessWidget {
                       color: Colors.black,),
                 ),
                 Text(
-                  "Rp. " + hargaSesi,
+                  "Rp. " + widget.hargaSesi,
                   style: TextStyle(
                       color: Colors.black,),
                 ),
@@ -179,7 +137,7 @@ class ConsultCheckOut extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Rp. " + hargaSesi,
+                  "Rp. " + widget.hargaSesi,
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -194,7 +152,7 @@ class ConsultCheckOut extends StatelessWidget {
                       height: 1,
             ),
             const SizedBox(height: 5), 
-            Column(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -207,31 +165,127 @@ class ConsultCheckOut extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 5), 
-            Container(
+            Card(
+              elevation: 5,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                height: 100,
+                width: 1080,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Uang Elektronik",
+                      style: TextStyle(
+                          color: Color.fromRGBO(0, 74, 173, 1),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    const SizedBox(height: 2), 
+                    Container(
                       margin: const EdgeInsets.only(top: 8),
-                      width: 1920,
+                      width: 1920, 
                       color: Color.fromRGBO(0, 74, 173, 1),
                       height: 1,
+                    ),                  
+                    const SizedBox(height: 8), 
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,  
+                      children: [
+                        Text(
+                          "GOPAY",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
+                        Text(
+                          "Saldo: Rp. 150.0000",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2), 
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      width: 1920, 
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                      height: 1,
+                    ),
+                    const SizedBox(height: 8), 
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,  
+                      children: [
+                        Text(
+                          "GOPAY",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
+                        Text(
+                          "Saldo: Rp. 150.0000",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 5), 
-
-            Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              width: 1920, 
+              color: Color.fromRGBO(0, 74, 173, 1),
+              height: 1,
+            ),
+            const SizedBox(height: 5), 
+            Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
-                        width: 100,
-                        height: 40,
-                        child: ElevatedButton(
-                            child: Text('Bayar'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromRGBO(0, 74, 173, 1),
-                            ),
-                            onPressed: () {
-                              
-                            }))
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Pembayaranmu",
+                          style: TextStyle(
+                              color: Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                        ),
+                        Text(
+                          "Rp. " + widget.hargaSesi,
+                          style: TextStyle(
+                              color: Colors.black,),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            width: 75,
+                            height: 25,
+                            child: ElevatedButton(
+                                child: Text('Bayar'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromRGBO(0, 74, 173, 1),
+                                ),
+                                onPressed: () {
+                                  
+                                })),
+                      ],
+                    )
                   ],
                 ),
           ],  
