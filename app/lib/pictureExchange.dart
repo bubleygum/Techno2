@@ -55,7 +55,7 @@ class PictureExchangeWidget extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => emotionMeter()));
+                          builder: (context) => EmotionMeter()));
               },
               child: Text(buttonLabels[index]),
             ),
