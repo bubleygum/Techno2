@@ -1,18 +1,23 @@
+import 'package:apps/chatWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
+import 'package:uuid/uuid.dart';
 
 import 'dbservices.dart';
+import 'home_page.dart';
 
 
 class ConsultCheckOutPage extends StatefulWidget {
+  final String idDokter;
   final String nama;
   final String jabatan;
   final String pengalaman;
   final String rating;
   final String hargaSesi;
-  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi}) : super(key: key);
+  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi, required this.idDokter}) : super(key: key);
   @override
     State<ConsultCheckOutPage> createState() => ConsultCheckOut();
 }
@@ -308,8 +313,12 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                                   backgroundColor:
                                       Color.fromRGBO(0, 74, 173, 1),
                                 ),
-                                onPressed: () {
-                                  
+                                onPressed: () {     
+                                  var idChat = Uuid().v4();
+                                  createListPasien(IDChat: idChat);
+                                  createPesananUser(IDChat: idChat);
+                                  createChat(IDChat: idChat);
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false);
                                 })),
                       ],
                     )
@@ -321,17 +330,58 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
   )
     );
   }
-  // Future createUser({String? userUID}) async{
-  //   final docUser = FirebaseFirestore.instance.collection('doctorList').doc(userUID);
-  //   final json = {
-  //     'username': _usernameController.text.toString(),
-  //     'phone-number': _phoneNumberController.text.toString(), 
-  //     'email': _emailController.text.toString()
-  //   };
-  //   //create document and write to DB
-  //   await docUser
-  //     .set(json)
-  //     .whenComplete(() => print("added to database"))
-  //     .catchError((e) => print(e));
-  // }
+  Future createListPasien({String? IDChat}) async{
+    final docListPasien = FirebaseFirestore.instance
+      .collection('doctorList')
+      .doc(widget.idDokter)
+      .collection('listPasien')
+      .doc(FirebaseAuth.instance.currentUser!.uid);
+    final json = {
+      'chatId': IDChat,
+      'jamMulai': DateTime.now(), 
+      'jamSelesai': DateTime.now()
+    };
+    //create document and write to DB
+    await docListPasien
+      .set(json)
+      .whenComplete(() => print("added to database"))
+      .catchError((e) => print(e));
+  }
+  Future createPesananUser({String? IDChat}) async{
+    var idTransaksi = Uuid().v4();
+    final docListPasien = FirebaseFirestore.instance
+      .collection('KonsultasiUser')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('listKonsultasi')
+      .doc(idTransaksi);
+    final json = {
+      'idDokter': widget.idDokter,
+      'chatId': IDChat,
+      'jamMulai': DateTime.now(), 
+      'jamSelesai': DateTime.now()
+    };
+    //create document and write to DB
+    await docListPasien
+      .set(json)
+      .whenComplete(() => print("added to database"))
+      .catchError((e) => print(e));
+  }
+  Future createChat({String? IDChat}) async{
+    var idTransaksi = Uuid().v4();
+    final docListPasien = FirebaseFirestore.instance
+      .collection('chat')
+      .doc(IDChat)
+      .collection('messages');
+    final json = {
+      'idDokter': widget.idDokter,
+      'chatId': IDChat,
+      'jamMulai': DateTime.now(), 
+      'jamSelesai': DateTime.now()
+    };
+    //create document and write to DB
+    await docListPasien
+      .add({})
+      .catchError((e) => print(e));;
+  }
+
 }
