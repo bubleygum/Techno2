@@ -58,7 +58,7 @@ class DoctorList extends StatelessWidget {
                                           // ),
                                           const SizedBox(height: 4),
                                           Text(
-                                            lvIdDokter,
+                                            lvNama,
                                             style: TextStyle(
                                                 color: Color.fromRGBO(0, 74, 173, 1),
                                                 fontWeight: FontWeight.bold),
@@ -152,6 +152,7 @@ class DoctorList extends StatelessWidget {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 ConsultCheckOutPage(
+                                                                    idDokter: lvIdDokter,
                                                                     nama: lvNama,
                                                                     jabatan: lvJabatan,
                                                                     pengalaman: lvPengalaman,

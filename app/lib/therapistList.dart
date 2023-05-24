@@ -22,6 +22,7 @@ class TherapistList extends StatelessWidget {
                 return ListView.separated(
                     itemBuilder: (context, index) {
                       DocumentSnapshot dsData = snapshot.data!.docs[index];
+                      String lvIdDokter = dsData.id;
                       String lvNama = dsData["nama"];
                       String lvJabatan = dsData["jabatan"];
                       String lvPengalaman = dsData["pengalaman"];
@@ -152,6 +153,7 @@ class TherapistList extends StatelessWidget {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 ConsultCheckOutPage(
+                                                                    idDokter: lvIdDokter,
                                                                     nama: lvNama,
                                                                     jabatan: lvJabatan,
                                                                     pengalaman: lvPengalaman,
