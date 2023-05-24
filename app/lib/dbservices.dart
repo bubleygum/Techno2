@@ -51,6 +51,12 @@ class Database{
   static Stream<QuerySnapshot> getDataCaregiver(){
     return tabelCaregiver.snapshots();
   }
-
+  //read data list pasien
+  static Stream<QuerySnapshot> getListPasien(id){
+    DocumentReference docRef = tabelDokter.doc(id);
+    CollectionReference listPatient = docRef.collection("listPasien");
+    return listPatient.snapshots();
+    // return tabelDokter.snapshots();
+  }
 }
 
