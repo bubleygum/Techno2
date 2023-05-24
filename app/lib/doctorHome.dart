@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:apps/chatWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dbservices.dart';
-
+import 'package:intl/intl.dart';
 class DoctorHome extends StatelessWidget {
   const DoctorHome({Key? key}) : super(key: key);
 
@@ -67,6 +67,10 @@ class DoctorHomeScreen extends StatelessWidget {
                     Timestamp jamMulai = patientDoc["jamMulai"];
                     Timestamp jamSelesai = patientDoc["jamSelesai"];
                     DateTime dateTimeMulai = jamMulai.toDate();
+                    DateTime dateTimeSelesai = jamSelesai.toDate();
+                    String formatMulai = DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
+                    String formatSelesai = DateFormat('dd-MM-yyyy HH:mm').format(dateTimeSelesai);
+                    
                     return StreamBuilder<DocumentSnapshot>(
                       stream: Database.getPatientData(patientID),
                       builder: (context, snapshot) {
@@ -94,12 +98,18 @@ class DoctorHomeScreen extends StatelessWidget {
                                       color: Color.fromRGBO(0, 74, 173, 1),
                                     ),
                                   ),
-                                  // Text(
-                                  //   "Nama: $nama",
-                                  //   style: TextStyle(
-                                  //     color: Color.fromRGBO(0, 74, 173, 1),
-                                  //   ),
-                                  // ),
+                                  Text(
+                                    "Jam Mulai: $formatMulai",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(0, 74, 173, 1),
+                                    ),
+                                  ),
+                                  Text(
+                                    "Jam Selesai: $formatSelesai",
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(0, 74, 173, 1),
+                                    ),
+                                  ),
                                   ElevatedButton(
                                       child: Text('Chat'),
                                       style: ElevatedButton.styleFrom(
