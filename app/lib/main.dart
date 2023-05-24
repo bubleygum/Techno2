@@ -13,8 +13,8 @@ Future<void>  main() async{
   );
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
-    //builder: ((context, child) => const MainApp()),
-    builder: ((context, child) => const home_page()),
+    builder: ((context, child) => const MainApp()),
+    //builder: ((context, child) => const home_page()),
   ));
 }
 

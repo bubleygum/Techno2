@@ -15,7 +15,6 @@ class ConsultCheckOutPage extends StatefulWidget {
   const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi}) : super(key: key);
   @override
     State<ConsultCheckOutPage> createState() => ConsultCheckOut();
-  
 }
 class ConsultCheckOut extends State<ConsultCheckOutPage> {
 
@@ -169,7 +168,7 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
               elevation: 5,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                height: 100,
+                height: 130,
                 width: 1080,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,7 +201,7 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                               fontSize: 12),
                         ),
                         Text(
-                          "Saldo: Rp. 150.0000",
+                          "Saldo: Rp. 130.000",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 12),
@@ -222,14 +221,41 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,  
                       children: [
                         Text(
-                          "GOPAY",
+                          "DANA",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 12),
                         ),
                         Text(
-                          "Saldo: Rp. 150.0000",
+                          "Saldo: Rp. 150.000",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2), 
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      width: 1920, 
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                      height: 1,
+                    ),
+                    const SizedBox(height: 8), 
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,  
+                      children: [
+                        Text(
+                          "Link aja",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
+                        Text(
+                          "Saldo: Rp. 75.000",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 12),
@@ -240,7 +266,8 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 5), 
+            
+            const SizedBox(height: 150), 
             Container(
               margin: const EdgeInsets.only(top: 8),
               width: 1920, 
@@ -294,4 +321,17 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
   )
     );
   }
+  // Future createUser({String? userUID}) async{
+  //   final docUser = FirebaseFirestore.instance.collection('doctorList').doc(userUID);
+  //   final json = {
+  //     'username': _usernameController.text.toString(),
+  //     'phone-number': _phoneNumberController.text.toString(), 
+  //     'email': _emailController.text.toString()
+  //   };
+  //   //create document and write to DB
+  //   await docUser
+  //     .set(json)
+  //     .whenComplete(() => print("added to database"))
+  //     .catchError((e) => print(e));
+  // }
 }

@@ -21,9 +21,10 @@ class DoctorList extends StatelessWidget {
                 return ListView.separated(
                     itemBuilder: (context, index) {
                       DocumentSnapshot dsData = snapshot.data!.docs[index];
+                      String lvIdDokter = dsData.id;
                       String lvNama = dsData["nama"];
                       String lvJabatan = dsData["jabatan"];
-                      String lvPengalaman = dsData["pengalaman"];
+                      String lvPengalaman = dsData["pengalaman"]; 
                       String lvRating = dsData["rating"];
                       String lvHargaSesi= dsData["hargaSesi"];
                       return Card(
@@ -57,7 +58,7 @@ class DoctorList extends StatelessWidget {
                                           // ),
                                           const SizedBox(height: 4),
                                           Text(
-                                            lvNama,
+                                            lvIdDokter,
                                             style: TextStyle(
                                                 color: Color.fromRGBO(0, 74, 173, 1),
                                                 fontWeight: FontWeight.bold),
