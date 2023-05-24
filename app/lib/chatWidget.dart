@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:apps/DataClass/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String chatId;
@@ -27,8 +19,19 @@ class ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(0, 74, 173, 0.3),
       appBar: AppBar(
-        title: Text('Chat Page'),
+        leading: IconButton(
+          icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Chat Page',
+          style: TextStyle(
+            color: Color.fromRGBO(0, 74, 173, 1),
+          ),
+        ),
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -68,7 +71,8 @@ class ChatPageState extends State<ChatPage> {
                     final String sentBy = data['sentBy'];
                     final String message = data['message'];
                     final Timestamp timestamp = data['timestamp'];
-
+                    final formattedTime =
+                        DateFormat.Hm().format(timestamp.toDate());
                     bool isCurrentUser = sentBy == UserUID;
                     bool isSenderOnRight = isCurrentUser;
 
@@ -80,17 +84,35 @@ class ChatPageState extends State<ChatPage> {
                         margin: EdgeInsets.symmetric(vertical: 4.0),
                         padding: EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
-                          color:
-                              isCurrentUser ? Colors.lightBlue : Colors.white,
+                          color: isCurrentUser
+                              ? Color.fromRGBO(0, 74, 173, 1)
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                            fontWeight: isCurrentUser
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message,
+                              style: TextStyle(
+                                fontWeight: isCurrentUser
+                                    ? FontWeight.normal
+                                    : FontWeight.normal,
+                                color: isCurrentUser
+                                    ? Colors.white
+                                    : Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                            ),
+                            Text(
+                              formattedTime,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isCurrentUser
+                                    ? Colors.white
+                                    : Color.fromRGBO(0, 74, 173, 1),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );

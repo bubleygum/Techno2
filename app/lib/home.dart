@@ -1,4 +1,4 @@
-import 'package:apps/doctorList.dart';
+import 'package:apps/chatWidget.dart';
 import 'package:apps/workshopList_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:apps/home_page.dart';
@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:apps/doctor_therapist.dart';
-
+import 'package:apps/chatWidget.dart';
 import 'caregiver_list.dart';
 
 final List<String> imgList = [
@@ -48,8 +48,10 @@ class HomeScreen extends StatelessWidget {
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
                     onPressed: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => ListTherapy()));
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ListTherapy()));
+                          builder: (context) => ChatPage(chatId: "fuNojwwECWC3KWgTfIT4")));
                     },
                   ),
                   FittedBox(
