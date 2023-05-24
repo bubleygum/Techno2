@@ -34,12 +34,7 @@ class DoctorHomeScreen extends StatelessWidget {
                     icon: FaIcon(FontAwesomeIcons.handHoldingHeart),
                     iconSize: 30,
                     color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                                chatId: "id",
-                              )));
-                    },
+                    onPressed: () {},
                   ),
                   FittedBox(
                     fit: BoxFit.scaleDown,
@@ -72,36 +67,68 @@ class DoctorHomeScreen extends StatelessWidget {
                     Timestamp jamMulai = patientDoc["jamMulai"];
                     Timestamp jamSelesai = patientDoc["jamSelesai"];
                     DateTime dateTimeMulai = jamMulai.toDate();
-                    return Card(
-                      elevation: 5,
-                      child: ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Chat ID: $patientID",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(0, 74, 173, 1),
+                    return StreamBuilder<DocumentSnapshot>(
+                      stream: Database.getPatientData(patientID),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return ListTile(
+                            title: Text('Loading...'),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('error');
+                        } else if (snapshot.hasData) {
+                          DocumentSnapshot doc = snapshot.data!;
+                          String nama = doc["username"];
+
+                          return Card(
+                            elevation: 5,
+                            child: ListTile(
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Nama: $nama",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(0, 74, 173, 1),
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   "Nama: $nama",
+                                  //   style: TextStyle(
+                                  //     color: Color.fromRGBO(0, 74, 173, 1),
+                                  //   ),
+                                  // ),
+                                  ElevatedButton(
+                                      child: Text('Chat'),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Color.fromRGBO(0, 74, 173, 1),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) => ChatPage(
+                                                      chatId: chatId,
+                                                    )));
+                                      }),
+                                ],
                               ),
                             ),
-                            Text(
-                              "Jam Mulai: $dateTimeMulai",
-                              style: TextStyle(
-                                color: Color.fromRGBO(0, 74, 173, 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // ...other card properties...
-                      ),
+                          );
+                        }
+
+                        return Container(); // Return an appropriate widget here
+                      },
                     );
                   },
                 );
               }
+
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(
+                  valueColor: AlwaysStoppedAnimation<Color>(
                     Color.fromRGBO(0, 74, 173, 1),
                   ),
                 ),

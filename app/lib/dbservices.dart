@@ -3,61 +3,73 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'DataClass/school_data.dart';
 import 'DataClass/workshop_data.dart';
 
-CollectionReference tabelSekolah = FirebaseFirestore.instance.collection("schoolList");
-CollectionReference tabelPelatihan = FirebaseFirestore.instance.collection("workshopList");
-CollectionReference tabelDokter = FirebaseFirestore.instance.collection("doctorList");
-CollectionReference tabelTerapis = FirebaseFirestore.instance.collection("therapistList");
+CollectionReference tabelSekolah =
+    FirebaseFirestore.instance.collection("schoolList");
+CollectionReference tabelPelatihan =
+    FirebaseFirestore.instance.collection("workshopList");
+CollectionReference tabelDokter =
+    FirebaseFirestore.instance.collection("doctorList");
+CollectionReference tabelTerapis =
+    FirebaseFirestore.instance.collection("therapistList");
 
-CollectionReference tabelCaregiver = FirebaseFirestore.instance.collection("caregiverList");
-class Database{
-  //read data list sekolah 
-  static Stream<QuerySnapshot> getDataSekolah(){
+CollectionReference tabelCaregiver =
+    FirebaseFirestore.instance.collection("caregiverList");
+
+class Database {
+  //read data list sekolah
+  static Stream<QuerySnapshot> getDataSekolah() {
     return tabelSekolah.snapshots();
   }
-  //input data list sekolah 
-  static Future<void> tambahDataSekolah({required schoolList item})async{
+
+  //input data list sekolah
+  static Future<void> tambahDataSekolah({required schoolList item}) async {
     DocumentReference docRef = tabelSekolah.doc(item.namaSekolah);
     await docRef
-    .set(item.toJson())
-    .whenComplete(() => print("data diinput"))
-    .catchError((e)=> print(e));
-    
+        .set(item.toJson())
+        .whenComplete(() => print("data diinput"))
+        .catchError((e) => print(e));
   }
-  //read data list workshop 
-  static Stream<QuerySnapshot> getDataPelatihan(){
+
+  //read data list workshop
+  static Stream<QuerySnapshot> getDataPelatihan() {
     return tabelPelatihan.snapshots();
   }
-    //input data list workshop 
-  static Future<void> tambahDataPelatihan({required workshopList item})async{
+
+  //input data list workshop
+  static Future<void> tambahDataPelatihan({required workshopList item}) async {
     DocumentReference docRef = tabelPelatihan.doc(item.namaPelatihan);
     await docRef
-    .set(item.toJson())
-    .whenComplete(() => print("data diinput"))
-    .catchError((e)=> print(e));
-    
+        .set(item.toJson())
+        .whenComplete(() => print("data diinput"))
+        .catchError((e) => print(e));
   }
 
   //read data list dokter
-  static Stream<QuerySnapshot> getDataDokter(){
+  static Stream<QuerySnapshot> getDataDokter() {
     return tabelDokter.snapshots();
   }
 
   //read data list terapis
-  static Stream<QuerySnapshot> getDataTerapis(){
+  static Stream<QuerySnapshot> getDataTerapis() {
     return tabelTerapis.snapshots();
   }
 
   //read data list caregiver
-  static Stream<QuerySnapshot> getDataCaregiver(){
+  static Stream<QuerySnapshot> getDataCaregiver() {
     return tabelCaregiver.snapshots();
   }
+
   //read data list pasien
-  static Stream<QuerySnapshot> getListPasien(id){
+  static Stream<QuerySnapshot> getListPasien(id) {
     DocumentReference docRef = tabelDokter.doc(id);
     CollectionReference listPatient = docRef.collection("listPasien");
     return listPatient.snapshots();
-    // return tabelDokter.snapshots();
   }
-  
-}
 
+  static Stream<DocumentSnapshot> getPatientData(String? patientID) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(patientID)
+        .snapshots();
+  }
+}
