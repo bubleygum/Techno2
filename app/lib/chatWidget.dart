@@ -19,7 +19,7 @@ class ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(0, 74, 173, 0.3),
+      backgroundColor: Color.fromRGBO(0, 74, 173, 0.2),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
