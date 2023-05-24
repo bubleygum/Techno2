@@ -185,57 +185,6 @@ class SignUpForm extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 150,
-              height: 30,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.lock),
-                  hintText: 'OTP',
-                  errorStyle: TextStyle(height: 0.5, fontSize: 0),
-                  errorMaxLines: 2,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  contentPadding:
-                      EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 2, color: Color.fromRGBO(0, 0, 0, 0.3)),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'OTP harus di isi';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            SizedBox(width: 10),
-            SizedBox(
-                width: 140,
-                child: new ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(0, 74, 173, 1),
-                  ),
-                  child: const Text('Send OTP'),
-                  onPressed: () {
-                    if (validatePhoneNumber(phoneCont.text)) {
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(content: Text('OTP Send')));
-                    } else {
-                      // Show an error message if the phone number is not valid
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //         content: Text('Invalid phone number')));
-                    }
-                  },
-                )),
-          ],
-        ),
         SizedBox(height: 20),
         SizedBox(
             width: 250,
