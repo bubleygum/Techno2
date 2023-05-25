@@ -157,7 +157,8 @@ class DoctorList extends StatelessWidget {
                                                                     jabatan: lvJabatan,
                                                                     pengalaman: lvPengalaman,
                                                                     hargaSesi: lvHargaSesi,
-                                                                    rating: lvRating)));
+                                                                    rating: lvRating,
+                                                                    jenisKonsultasi: ConsultType.konsultasiDokter,)));
                                                   }))
                                         ],
                                       ),

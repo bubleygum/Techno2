@@ -1,4 +1,5 @@
 import 'package:apps/chatWidget.dart';
+import 'package:apps/listKonsultasiUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'dbservices.dart';
 import 'home_page.dart';
 
-
+enum ConsultType { konsultasiDokter, terapi }
 class ConsultCheckOutPage extends StatefulWidget {
   final String idDokter;
   final String nama;
@@ -17,7 +18,8 @@ class ConsultCheckOutPage extends StatefulWidget {
   final String pengalaman;
   final String rating;
   final String hargaSesi;
-  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi, required this.idDokter}) : super(key: key);
+  final ConsultType jenisKonsultasi;
+  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi, required this.idDokter, required this.jenisKonsultasi}) : super(key: key);
   @override
     State<ConsultCheckOutPage> createState() => ConsultCheckOut();
 }
@@ -318,7 +320,7 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                                   createListPasien(IDChat: idChat);
                                   createPesananUser(IDChat: idChat);
                                   createChat(IDChat: idChat);
-                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false);
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ListKonsultasiUser()), (Route<dynamic> route) => false);
                                 })),
                       ],
                     )
@@ -331,40 +333,77 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
     );
   }
   Future createListPasien({String? IDChat}) async{
-    final docListPasien = FirebaseFirestore.instance
+    if(widget.jenisKonsultasi == ConsultType.konsultasiDokter){
+      final docListPasien = FirebaseFirestore.instance
       .collection('doctorList')
       .doc(widget.idDokter)
       .collection('listPasien')
       .doc(FirebaseAuth.instance.currentUser!.uid);
-    final json = {
-      'chatId': IDChat,
-      'jamMulai': DateTime.now(), 
-      'jamSelesai': DateTime.now()
-    };
-    //create document and write to DB
-    await docListPasien
-      .set(json)
-      .whenComplete(() => print("added to database"))
-      .catchError((e) => print(e));
+      final json = {
+        'chatId': IDChat,
+        'jamMulai': DateTime.now(), 
+        'jamSelesai': DateTime.now().add(Duration(hours: 1)),
+      };
+      //create document and write to DB
+      await docListPasien
+        .set(json)
+        .whenComplete(() => print("added to database"))
+        .catchError((e) => print(e));
+    }else if(widget.jenisKonsultasi == ConsultType.terapi){
+      final docListPasien = FirebaseFirestore.instance
+      .collection('therapistList')
+      .doc(widget.idDokter)
+      .collection('listPasien')
+      .doc(FirebaseAuth.instance.currentUser!.uid);
+      final json = {
+        'chatId': IDChat,
+        'jamMulai': DateTime.now(), 
+        'jamSelesai': DateTime.now().add(Duration(hours: 1)),
+      };
+      //create document and write to DB
+      await docListPasien
+        .set(json)
+        .whenComplete(() => print("added to database"))
+        .catchError((e) => print(e));
+    }
+    
   }
   Future createPesananUser({String? IDChat}) async{
     var idTransaksi = Uuid().v4();
-    final docListPasien = FirebaseFirestore.instance
-      .collection('KonsultasiUser')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('listKonsultasi')
-      .doc(idTransaksi);
-    final json = {
-      'idDokter': widget.idDokter,
-      'chatId': IDChat,
-      'jamMulai': DateTime.now(), 
-      'jamSelesai': DateTime.now()
-    };
-    //create document and write to DB
-    await docListPasien
-      .set(json)
-      .whenComplete(() => print("added to database"))
-      .catchError((e) => print(e));
+    final docListKonsultasi = FirebaseFirestore.instance
+        .collection('KonsultasiUser')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('listKonsultasi')
+        .doc(idTransaksi);
+    if(widget.jenisKonsultasi == ConsultType.konsultasiDokter){
+      final json = {
+        'idDokter': widget.idDokter,
+        'chatId': IDChat,
+        'jamMulai': DateTime.now(), 
+        'jamSelesai': DateTime.now().add(Duration(hours: 1)),
+        'jenisKonsultasi': 'Konsultasi Dokter'
+      };
+      //create document and write to DB
+      await docListKonsultasi
+        .set(json)
+        .whenComplete(() => print("added to database"))
+        .catchError((e) => print(e));
+    }else if(widget.jenisKonsultasi == ConsultType.terapi){
+      final json = {
+        'idDokter': widget.idDokter,
+        'chatId': IDChat,
+        'jamMulai': DateTime.now(), 
+        'jamSelesai': DateTime.now().add(Duration(hours: 1)),
+        'jenisKonsultasi': 'Terapi'
+      };
+      //create document and write to DB
+      await docListKonsultasi
+        .set(json)
+        .whenComplete(() => print("added to database"))
+        .catchError((e) => print(e));
+    }
+    
+    
   }
   Future createChat({String? IDChat}) async{
     var idTransaksi = Uuid().v4();
@@ -372,13 +411,8 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
       .collection('chat')
       .doc(IDChat)
       .collection('messages');
-    final json = {
-      'idDokter': widget.idDokter,
-      'chatId': IDChat,
-      'jamMulai': DateTime.now(), 
-      'jamSelesai': DateTime.now()
-    };
-    //create document and write to DB
+    
+    //create collection and write to DB
     await docListPasien
       .add({})
       .catchError((e) => print(e));;

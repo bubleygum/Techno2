@@ -1,10 +1,14 @@
 import 'package:apps/home.dart';
+import 'package:apps/listKonsultasiUser.dart';
 import 'package:apps/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/signUp.dart';
 import 'package:apps/login.dart';
 import 'package:apps/listTherapy.dart';
+
+import 'caregiver_list.dart';
 
 
 class home_page extends StatelessWidget {
@@ -45,8 +49,17 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
         // leading: Icon(Icons.menu),
         // title: Text('Page title'),
         actions: [
-          Icon(Icons.history,
-          color: Color.fromRGBO(0, 74, 173, 1)),
+          // Icon(Icons.history,
+          // color: Color.fromRGBO(0, 74, 173, 1)),
+          IconButton(
+            icon: FaIcon(FontAwesomeIcons.history),
+            iconSize: 20,
+            color: Color.fromRGBO(0, 74, 173, 1),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ListKonsultasiUser()));
+            },
+        ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Icon(Icons.notifications,color: Color.fromRGBO(0, 74, 173, 1)),
