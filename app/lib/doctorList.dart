@@ -1,4 +1,4 @@
-import 'package:apps/ConsultCheckOut.dart';
+import 'package:apps/CheckOut/ConsultCheckOut.dart';
 import 'package:apps/schoolDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

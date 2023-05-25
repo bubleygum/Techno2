@@ -1,5 +1,6 @@
+import 'package:apps/TransaksiUser/ListPesananUser.dart';
 import 'package:apps/home.dart';
-import 'package:apps/listKonsultasiUser.dart';
+import 'package:apps/TransaksiUser/listKonsultasiUser.dart';
 import 'package:apps/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -57,7 +58,7 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
             color: Color.fromRGBO(0, 74, 173, 1),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ListKonsultasiUser()));
+                  builder: (context) => ListPesananUser()));
             },
         ),
           Padding(

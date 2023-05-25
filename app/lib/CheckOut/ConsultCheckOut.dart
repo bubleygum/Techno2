@@ -1,5 +1,6 @@
+import 'package:apps/TransaksiUser/ListPesananUser.dart';
 import 'package:apps/chatWidget.dart';
-import 'package:apps/listKonsultasiUser.dart';
+import 'package:apps/TransaksiUser/listKonsultasiUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 import 'package:uuid/uuid.dart';
 
-import 'dbservices.dart';
-import 'home_page.dart';
+import '../dbservices.dart';
+import '../home_page.dart';
 
 enum ConsultType { konsultasiDokter, terapi }
 class ConsultCheckOutPage extends StatefulWidget {
@@ -320,7 +321,7 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                                   createListPasien(IDChat: idChat);
                                   createPesananUser(IDChat: idChat);
                                   createChat(IDChat: idChat);
-                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ListKonsultasiUser()), (Route<dynamic> route) => false);
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ListPesananUser()), (Route<dynamic> route) => false);
                                 })),
                       ],
                     )

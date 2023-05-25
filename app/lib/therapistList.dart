@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 
-import 'ConsultCheckOut.dart';
+import 'CheckOut/ConsultCheckOut.dart';
 import 'dbservices.dart';
 
 class TherapistList extends StatelessWidget {

@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 
-import 'dbservices.dart';
-import 'home_page.dart';
+import '../dbservices.dart';
+import '../home_page.dart';
 
 class ListKonsultasiUser extends StatefulWidget {
   const ListKonsultasiUser({Key? key}) : super(key: key);
@@ -21,17 +21,6 @@ class list_konsultasi_user extends State<ListKonsultasiUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
-            onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false),
-          ),
-          title: Text(
-            'Transaksi',
-            style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
-          ),
-          backgroundColor: Colors.white,
-        ),
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
               .collection("KonsultasiUser")

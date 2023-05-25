@@ -1,43 +1,62 @@
-import 'package:apps/CheckOut/CareGiverCheckOut.dart';
+import 'package:apps/chatWidget.dart';
 import 'package:apps/schoolDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 
-import 'dbservices.dart';
+import '../dbservices.dart';
+import '../home_page.dart';
 
-class caregiver_list extends StatelessWidget {
-  const caregiver_list({Key? key}) : super(key: key);
-
+class ListPesananCaregiverUser extends StatefulWidget {
+  const ListPesananCaregiverUser({Key? key}) : super(key: key);
+  @override
+    State<ListPesananCaregiverUser> createState() => list_pesanan_caregiver_user();
+  
+}
+class list_pesanan_caregiver_user extends State<ListPesananCaregiverUser> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Text(
-            'Caregiver',
-            style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
-          ),
-          backgroundColor: Colors.white,
-        ),
         body: StreamBuilder<QuerySnapshot>(
-            stream: Database.getDataCaregiver(),
+            stream: FirebaseFirestore.instance
+              .collection("PesananCaregiverUser")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('listPesanan')
+              .orderBy('jamMulai', descending: true)
+              .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('error');
               } else if (snapshot.hasData || snapshot.data != null) {
+                List<DocumentSnapshot> patients = snapshot.data!.docs;
                 return ListView.separated(
-                    itemBuilder: (context, index) {
-                      DocumentSnapshot dsData = snapshot.data!.docs[index];
-                      String lvIdCaregiver = dsData.id;
-                      String lvNama = dsData["nama"];
-                      String lvRating = dsData["rating"];
-                      String lvHargaSesi= dsData["hargaSesi"];
-                      return Card(
+                  separatorBuilder: (context, index) => SizedBox(height: 8.0),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot dsData = snapshot.data!.docs[index];
+                    String lvChatId = dsData["chatId"];
+                    String lvIdCaregiver = dsData["idCaregiver"];
+                    Timestamp lvJamMulai= dsData["jamMulai"];
+                    final dfJamMulai = DateFormat.Hm().format(lvJamMulai.toDate());
+                    Timestamp lvJamSelesai = dsData["jamSelesai"];
+                    final dfJamSelesai = DateFormat.Hm().format(lvJamSelesai.toDate());
+                    return StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                      .collection("caregiverList")
+                      .doc(lvIdCaregiver)
+                      .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('error');
+                        } else if (snapshot.hasData) {
+                          DocumentSnapshot doc = snapshot.data!;
+                          String namaCaregiver = doc["nama"];
+
+                          return Card(
                         elevation: 5,
                         child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -67,62 +86,44 @@ class caregiver_list extends StatelessWidget {
                                           //   height: 2,
                                           // ),
                                           const SizedBox(height: 4),
+                                          
                                           Text(
-                                            lvNama,
+                                            namaCaregiver,
                                             style: TextStyle(
                                                 color: Color.fromRGBO(0, 74, 173, 1),
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12
+                                                ),
                                           ),
                                           
-                                          Row(crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                decoration:  BoxDecoration (
-                                                  color:  Color(0x35004aad),
-                                                  borderRadius:  BorderRadius.circular(12),
-                                                ),
-                                                child: 
-                                                  RichText(
-                                                  text: TextSpan(
-                                                    children: [
-                                                      WidgetSpan(
-                                                        alignment: PlaceholderAlignment.middle, 
-                                                        child: Icon(Icons.thumb_up, size: 9,),
-                                                      ),
-                                                      TextSpan(
-                                                        text: " " + lvRating + "%",
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 9),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                                  
-                                              )
-                                            ],
-                                          ),
                                           Text(
-                                            "Biaya / Jam Rp. " + lvHargaSesi,
+                                            DateFormat.yMd().format(lvJamMulai.toDate()),
                                             style: TextStyle(
-                                                color: Color.fromRGBO(60, 60, 60, 1),
-                                                
+                                                color: Color.fromRGBO(0, 74, 173, 1),
+                                                fontSize: 10
                                                 ),
                                           ),
 
+                                          Text(
+                                            dfJamMulai + " - " + dfJamSelesai,
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(0, 74, 173, 1),
+                                                fontSize: 10
+                                                ),
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
                                   Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
                                           SizedBox(
-                                              width: 100,
+                                              width: 60,
                                               height: 40,
                                               child: ElevatedButton(
-                                                  child: Text('Jadwalkan'),
+                                                  child: Icon(Icons.message,color: Colors.white),
                                                   style: ElevatedButton.styleFrom(
                                                     backgroundColor:
                                                         Color.fromRGBO(0, 74, 173, 1),
@@ -131,11 +132,7 @@ class caregiver_list extends StatelessWidget {
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                CaregiverCheckOutPage(
-                                                                  nama: lvNama, 
-                                                                  rating: lvRating, 
-                                                                  hargaSesi: lvHargaSesi, 
-                                                                  idCaregiver: lvIdCaregiver)));
+                                                                ChatPage(chatId: lvChatId)));
                                                   }))
                                         ],
                                       ),
@@ -144,18 +141,25 @@ class caregiver_list extends StatelessWidget {
                             ),
                         )
                       );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(height: 8.0),
-                    itemCount: snapshot.data!.docs.length);
+                        }
+
+                        return Container(); // Return an appropriate widget here
+                      },
+                    );
                     
+                    
+                  },
+                );
               }
+
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(
+                  valueColor: AlwaysStoppedAnimation<Color>(
                     Color.fromRGBO(0, 74, 173, 1),
                   ),
                 ),
               );
-            }));
+            },
+          ));
   }
 }
