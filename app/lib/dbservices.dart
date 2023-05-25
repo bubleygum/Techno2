@@ -72,4 +72,10 @@ class Database {
         .doc(patientID)
         .snapshots();
   }
+  static Stream<DocumentSnapshot> getDoctorDetail(String? doctorID) {
+    return FirebaseFirestore.instance
+        .collection('doctorList')
+        .doc(doctorID)
+        .snapshots();
+  }
 }
