@@ -120,7 +120,7 @@ class DoctorHomeScreen extends StatelessWidget {
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
                                                 builder: (context) => ChatPage(
-                                                      chatId: chatId,
+                                                      chatId: chatId, time: jamSelesai
                                                     )));
                                       }),
                                 ],

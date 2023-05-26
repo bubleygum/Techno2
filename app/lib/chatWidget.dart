@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChatPage extends StatefulWidget {
   final String chatId;
-
-  ChatPage({required this.chatId});
+  final Timestamp time;
+  ChatPage({required this.chatId, required this.time});
 
   @override
   ChatPageState createState() => ChatPageState();
@@ -35,6 +36,35 @@ class ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          if (widget.time.compareTo(Timestamp.now()) >= 0)
+            GestureDetector(
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('I feel okay right now!'),
+                  content: const Icon(
+                    FontAwesomeIcons.faceSmile,
+                    color: Color.fromRGBO(0, 74, 173, 1),
+                    size: 50,
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              ),
+              child: Container(
+                height: 50,
+                color: Color.fromRGBO(92, 134, 200, 0.5),
+                child: const Center(child: Text('I am feeling ok')),
+              ),
+            ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
