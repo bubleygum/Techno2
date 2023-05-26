@@ -5,6 +5,7 @@ import 'package:apps/chatWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dbservices.dart';
 import 'package:intl/intl.dart';
+
 class DoctorHome extends StatelessWidget {
   const DoctorHome({Key? key}) : super(key: key);
 
@@ -23,32 +24,96 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text("Hello,"),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              child: Column(
-                children: <Widget>[
-                  IconButton(
-                    icon: FaIcon(FontAwesomeIcons.handHoldingHeart),
-                    iconSize: 30,
-                    color: Color.fromRGBO(0, 74, 173, 1),
-                    onPressed: () {},
+        Container(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: Database.getListPasien(UserUID),
+            builder: (BuildContext context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(
+                      Color.fromRGBO(0, 74, 173, 1),
+                    ),
                   ),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Patient',
-                      style: TextStyle(
-                          fontSize: 10, color: Color.fromRGBO(0, 74, 173, 1)),
+                );
+              }
+              int itemCount = snapshot.data!.docs.length;
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        IconButton(
+                          icon: FaIcon(FontAwesomeIcons.person),
+                          iconSize: 20,
+                          color: Color.fromRGBO(0, 74, 173, 1),
+                          onPressed: () {},
+                        ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '$itemCount',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color.fromRGBO(0, 74, 173, 1)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: Database.getDoctorDetail(UserUID),
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                              Color.fromRGBO(0, 74, 173, 1),
+                            ),
+                          );
+                        }
+                        DocumentSnapshot data = snapshot.data!;
+                        int harga = data["hargaSesi"];
+                        int pendapatan = itemCount*harga;
+                        return Container(
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: FaIcon(FontAwesomeIcons.moneyBill),
+                                iconSize: 20,
+                                color: Color.fromRGBO(0, 74, 173, 1),
+                                onPressed: () {},
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  '$pendapatan',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromRGBO(0, 74, 173, 1),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
+        Text("Your Patients:"),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
             stream: Database.getListPasien(UserUID),
@@ -68,9 +133,11 @@ class DoctorHomeScreen extends StatelessWidget {
                     Timestamp jamSelesai = patientDoc["jamSelesai"];
                     DateTime dateTimeMulai = jamMulai.toDate();
                     DateTime dateTimeSelesai = jamSelesai.toDate();
-                    String formatMulai = DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
-                    String formatSelesai = DateFormat('dd-MM-yyyy HH:mm').format(dateTimeSelesai);
-                    
+                    String formatMulai =
+                        DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
+                    String formatSelesai =
+                        DateFormat('dd-MM-yyyy HH:mm').format(dateTimeSelesai);
+
                     return StreamBuilder<DocumentSnapshot>(
                       stream: Database.getPatientData(patientID),
                       builder: (context, snapshot) {
@@ -117,11 +184,11 @@ class DoctorHomeScreen extends StatelessWidget {
                                             Color.fromRGBO(0, 74, 173, 1),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
                                                 builder: (context) => ChatPage(
-                                                      chatId: chatId, time: jamSelesai
-                                                    )));
+                                                    chatId: chatId,
+                                                    time: jamSelesai)));
                                       }),
                                 ],
                               ),

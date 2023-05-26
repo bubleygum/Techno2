@@ -21,6 +21,7 @@ class ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final currentTime = DateTime.now();
     final chatTime = widget.time;
+    //reminder session over 
     if (currentTime.isAfter(chatTime.toDate())) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         showDialog(
