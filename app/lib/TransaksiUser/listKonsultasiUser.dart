@@ -141,7 +141,7 @@ class list_konsultasi_user extends State<ListKonsultasiUser> {
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ChatPage(chatId: lvChatId)));
+                                                                ChatPage(chatId: lvChatId, time: lvJamSelesai,)));
                                                   }))
                                         ],
                                       ),
@@ -251,7 +251,7 @@ class list_konsultasi_user extends State<ListKonsultasiUser> {
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ChatPage(chatId: lvChatId)));
+                                                                ChatPage(chatId: lvChatId, time: lvJamSelesai,)));
                                                   }))
                                         ],
                                       ),

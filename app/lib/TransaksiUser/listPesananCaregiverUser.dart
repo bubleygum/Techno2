@@ -132,7 +132,7 @@ class list_pesanan_caregiver_user extends State<ListPesananCaregiverUser> {
                                                     Navigator.of(context).push(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ChatPage(chatId: lvChatId)));
+                                                                ChatPage(chatId: lvChatId, time: lvJamSelesai,)));
                                                   }))
                                         ],
                                       ),
