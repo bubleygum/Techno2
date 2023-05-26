@@ -36,7 +36,7 @@ class caregiver_list extends StatelessWidget {
                       String lvIdCaregiver = dsData.id;
                       String lvNama = dsData["nama"];
                       String lvRating = dsData["rating"];
-                      String lvHargaSesi= dsData["hargaSesi"];
+                      String lvHargaSesi= dsData["hargaSesi"].toString();
                       return Card(
                         elevation: 5,
                         child: Container(

@@ -4,6 +4,9 @@ import 'package:apps/TransaksiUser/listKonsultasiUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:apps/home.dart';
 import 'package:uuid/uuid.dart';
@@ -21,12 +24,10 @@ class CaregiverCheckOutPage extends StatefulWidget {
   @override
     State<CaregiverCheckOutPage> createState() => CaregiverCheckOut();
 }
-class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
 
-  @override
-  Widget build(BuildContext context) {
-    DateTime _dateTime = DateTime.now();
-    void _showDatePicker(){
+class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
+  DateTime _dateTime = DateTime.now();
+    void _showDatePicker(){ 
     showDatePicker(
       context: context, 
       initialDate: DateTime.now(), 
@@ -36,9 +37,19 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
         setState(() {
           _dateTime = value!;
         });
-    });;
+    });
+    
     }
+
+    
+    
+
+    
+  @override
+  Widget build(BuildContext context) {
+    
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
@@ -77,12 +88,19 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                           color: Color.fromRGBO(0, 74, 173, 1),
                           fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   widget.jabatan,
-                    //   style: TextStyle(
-                    //       color: Color.fromRGBO(0, 74, 173, 1),
-                    //       fontSize: 10),
-                    // ),
+                    ElevatedButton(
+                      child: Text('Bayar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Color.fromRGBO(0, 74, 173, 1),
+                      ),
+                      onPressed: () {     
+                        _showDatePicker();
+                      }),
+                    
+                    
+                    
+                    
                   ],
 
                 ),
@@ -367,8 +385,6 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
         .set(json)
         .whenComplete(() => print("added to database"))
         .catchError((e) => print(e));
-    
-    
     
   }
   Future createChat({String? IDChat}) async{
