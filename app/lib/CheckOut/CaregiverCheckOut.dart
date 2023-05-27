@@ -26,6 +26,10 @@ class CaregiverCheckOutPage extends StatefulWidget {
 }
 
 class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
+  DateTime _dateController = DateTime.now();
+  TimeOfDay _timeController = TimeOfDay.now();
+  
+  final _lamaSesiController = TextEditingController();
   DateTime _dateTime = DateTime.now();
     void _showDatePicker(){ 
     showDatePicker(
@@ -41,7 +45,24 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
     
     }
 
-    
+    // Initial Selected Value
+  String dropdownvalue = '1 Jam';   
+  
+  // List of items in our dropdown menu
+  var items = [    
+    '1 Jam',
+    '2 Jam',
+    '3 Jam',
+    '4 Jam',
+    '5 Jam',
+    '6 Jam',
+    '7 Jam',
+    '8 Jam',
+    '9 Jam',
+  ];
+
+  var hargaTotal;
+  
     
 
     
@@ -88,16 +109,105 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                           color: Color.fromRGBO(0, 74, 173, 1),
                           fontWeight: FontWeight.bold),
                     ),
-                    ElevatedButton(
-                      child: Text('Bayar'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color.fromRGBO(0, 74, 173, 1),
-                      ),
-                      onPressed: () {     
-                        _showDatePicker();
-                      }),
-                    
+                    const SizedBox(height: 4),
+                    Row(children: [
+                        ElevatedButton(
+                          child: Icon(Icons.event,color: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Color.fromRGBO(0, 74, 173, 1),
+                          ),
+                          onPressed:  () async{     
+                            final selectedDate = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2023),
+                            lastDate: DateTime(2025),
+                            initialDate: DateTime.now(),
+                          );
+                          if (selectedDate != null) {
+                            setState(() {
+                              _dateController = selectedDate;
+                              //DateFormat.yMd().format(selectedDate)
+                            });
+                          }
+                          }),
+                          const SizedBox(width: 10,),
+                          Text(
+                          DateFormat.yMd().format(_dateController).toString(),
+                          style: TextStyle(
+                              color: Color.fromRGBO(0, 74, 173, 1),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(children: [
+                        ElevatedButton(
+                          child: Icon(Icons.alarm_rounded,color: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Color.fromRGBO(0, 74, 173, 1),
+                          ),
+                          onPressed:  () async{     
+                            final selectedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                            builder: (BuildContext context, Widget? child) {
+                              return MediaQuery(
+                                data: MediaQuery.of(context)
+                                    .copyWith(alwaysUse24HourFormat: false),
+                                child: child!,
+                              );
+                            },
+                          );
+
+                          if (selectedTime != null) {
+                            final text = selectedTime.format(context);
+                            setState(() {
+                              _timeController = selectedTime;
+                            });
+                          }
+                          }),
+                          const SizedBox(width: 10,),
+                          Text(
+                          _timeController.format(context),
+                          style: TextStyle(
+                              color: Color.fromRGBO(0, 74, 173, 1),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(children: [
+                        Text(
+                            "Durasi",
+                            style: TextStyle(
+                                color: Color.fromRGBO(0, 74, 173, 1),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        const SizedBox(width: 10,),
+                        DropdownButton(
+                          // Initial Value
+                          value: dropdownvalue,
+                            
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),  
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(), 
+                          onChanged: (String? newValue) { 
+                            setState(() {
+                              dropdownvalue = newValue!;
+                              _lamaSesiController.text = newValue!;
+                          });},
+                          ),
+                          
+                          
+                      ],
+                    ),
                     
                     
                     
@@ -124,7 +234,7 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                       color: Colors.black,),
                 ),
                 Text(
-                  "Rp. " + widget.hargaSesi,
+                  "Rp. " +  (int.parse(widget.hargaSesi) * int.parse(dropdownvalue[0])).toString(),
                   style: TextStyle(
                       color: Colors.black,),
                 ),
@@ -159,7 +269,7 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Rp. " + widget.hargaSesi,
+                  "Rp. " + (int.parse(widget.hargaSesi) * int.parse(dropdownvalue[0])).toString(),
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -290,7 +400,7 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
               ),
             ),
             
-            const SizedBox(height: 150), 
+            const SizedBox(height: 90), 
             Container(
               margin: const EdgeInsets.only(top: 8),
               width: 1920, 
@@ -333,8 +443,9 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                                 ),
                                 onPressed: () {     
                                   var idChat = Uuid().v4();
-                                  createListCustomer(IDChat: idChat);
-                                  createPesananUser(IDChat: idChat);
+                                  
+                                  createListCustomer(IDChat: idChat, durasi: int.parse(dropdownvalue[0]));
+                                  createPesananUser(IDChat: idChat, durasi: int.parse(dropdownvalue[0]));
                                   createChat(IDChat: idChat);
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ListPesananUser()), (Route<dynamic> route) => false);
                                 })),
@@ -348,43 +459,54 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
   )
     );
   }
-  Future createListCustomer({String? IDChat}) async{
+  Future createListCustomer({String? IDChat, int durasi=1}) async{
       final docListCustomer = FirebaseFirestore.instance
       .collection('caregiverList')
       .doc(widget.idCaregiver)
       .collection('listCustomer')
       .doc(FirebaseAuth.instance.currentUser!.uid);
-      final json = {
-        'chatId': IDChat,
-        'jamMulai': DateTime.now(), 
-        'jamSelesai': DateTime.now().add(Duration(hours: 1)),
-      };
-      //create document and write to DB
-      await docListCustomer
-        .set(json)
-        .whenComplete(() => print("added to database"))
-        .catchError((e) => print(e));
-    
-    
+      
+        var date = _dateController;
+        var time = _timeController;
+        var dateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+        final json = {
+          'chatId': IDChat,
+          'jamMulai': dateTime, 
+          'jamSelesai': dateTime.add(Duration(hours: durasi)),
+        };
+        //create document and write to DB
+        await docListCustomer
+          .set(json)
+          .whenComplete(() => print("added to database"))
+          .catchError((e) => print(e));
+      
+      
   }
-  Future createPesananUser({String? IDChat}) async{
+  Future createPesananUser({String? IDChat, int durasi=1}) async{
     var idTransaksi = Uuid().v4();
     final docListPesanan = FirebaseFirestore.instance
         .collection('PesananCaregiverUser')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('listPesanan')
         .doc(idTransaksi);
-      final json = {
+      
+      
+        var date = _dateController;
+        var time = _timeController;
+        var dateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+        
+        final json = {
         'idCaregiver': widget.idCaregiver,
         'chatId': IDChat,
-        'jamMulai': DateTime.now(), 
-        'jamSelesai': DateTime.now().add(Duration(hours: 1))
+        'jamMulai': dateTime, 
+        'jamSelesai': dateTime.add(Duration(hours: durasi))
       };
       //create document and write to DB
       await docListPesanan
         .set(json)
         .whenComplete(() => print("added to database"))
         .catchError((e) => print(e));
+      
     
   }
   Future createChat({String? IDChat}) async{
