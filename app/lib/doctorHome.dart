@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +14,18 @@ class DoctorHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.close, color: Color.fromRGBO(0, 74, 173, 1)),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Dashboard',
+          style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      backgroundColor: Color.fromRGBO(144, 177, 222, 0.3),
       body: DoctorHomeScreen(),
     );
   }
@@ -20,10 +34,31 @@ class DoctorHome extends StatelessWidget {
 class DoctorHomeScreen extends StatelessWidget {
   DoctorHomeScreen({Key? key}) : super(key: key);
   final UserUID = FirebaseAuth.instance.currentUser?.uid;
+  void sessionOver(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Session is Over'),
+          content: Text('The chat session has ended.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Container(),
         Container(
           child: StreamBuilder<QuerySnapshot>(
             stream: Database.getListPasien(UserUID),
@@ -54,14 +89,23 @@ class DoctorHomeScreen extends StatelessWidget {
                           onPressed: () {},
                         ),
                         FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            '$itemCount',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromRGBO(0, 74, 173, 1)),
-                          ),
-                        ),
+                            fit: BoxFit.scaleDown,
+                            child: Column(children: <Widget>[
+                              Text(
+                                "Patients",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(0, 74, 173, 1),
+                                ),
+                              ),
+                              Text(
+                                '$itemCount',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(0, 74, 173, 1),
+                                ),
+                              ),
+                            ])),
                       ],
                     ),
                   ),
@@ -82,7 +126,7 @@ class DoctorHomeScreen extends StatelessWidget {
                         }
                         DocumentSnapshot data = snapshot.data!;
                         int harga = data["hargaSesi"];
-                        int pendapatan = itemCount*harga;
+                        int pendapatan = itemCount * harga;
                         return Container(
                           child: Row(
                             children: <Widget>[
@@ -93,15 +137,23 @@ class DoctorHomeScreen extends StatelessWidget {
                                 onPressed: () {},
                               ),
                               FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  '$pendapatan',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromRGBO(0, 74, 173, 1),
-                                  ),
-                                ),
-                              ),
+                                  fit: BoxFit.scaleDown,
+                                  child: Column(children: <Widget>[
+                                    Text(
+                                      "Income",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(0, 74, 173, 1),
+                                      ),
+                                    ),
+                                    Text(
+                                      '$pendapatan',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromRGBO(0, 74, 173, 1),
+                                      ),
+                                    ),
+                                  ])),
                             ],
                           ),
                         );
@@ -133,6 +185,7 @@ class DoctorHomeScreen extends StatelessWidget {
                     Timestamp jamSelesai = patientDoc["jamSelesai"];
                     DateTime dateTimeMulai = jamMulai.toDate();
                     DateTime dateTimeSelesai = jamSelesai.toDate();
+                    Bool status = patientDoc["active"];
                     String formatMulai =
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
                     String formatSelesai =
@@ -184,11 +237,16 @@ class DoctorHomeScreen extends StatelessWidget {
                                             Color.fromRGBO(0, 74, 173, 1),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) => ChatPage(
-                                                    chatId: chatId,
-                                                    time: jamSelesai)));
+                                        if (status == true) {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChatPage(
+                                                          chatId: chatId,
+                                                          time: jamSelesai)));
+                                        }else{
+                                          sessionOver(context);
+                                        }
                                       }),
                                 ],
                               ),
