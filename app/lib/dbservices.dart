@@ -65,7 +65,11 @@ class Database {
     CollectionReference listPatient = docRef.collection("listPasien");
     return listPatient.snapshots();
   }
-
+  static Stream<QuerySnapshot> getListPasienCare(id) {
+    DocumentReference docRef = tabelCaregiver.doc(id);
+    CollectionReference listPatient = docRef.collection("listPasien");
+    return listPatient.snapshots();
+  }
   static Stream<DocumentSnapshot> getPatientData(String? patientID) {
     return FirebaseFirestore.instance
         .collection('users')

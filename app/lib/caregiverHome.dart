@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dbservices.dart';
 import 'package:intl/intl.dart';
 
-class DoctorHome extends StatelessWidget {
-  const DoctorHome({Key? key}) : super(key: key);
+class CaregiverHome extends StatelessWidget {
+  const CaregiverHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,13 @@ class DoctorHome extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Color.fromRGBO(144, 177, 222, 0.1),
-      body: DoctorHomeScreen(),
+      body: CaregiverHomeScreen(),
     );
   }
 }
 
-class DoctorHomeScreen extends StatelessWidget {
-  DoctorHomeScreen({Key? key}) : super(key: key);
+class CaregiverHomeScreen extends StatelessWidget {
+  CaregiverHomeScreen({Key? key}) : super(key: key);
   final UserUID = FirebaseAuth.instance.currentUser?.uid;
 
   @override
@@ -40,7 +40,7 @@ class DoctorHomeScreen extends StatelessWidget {
         Container(),
         Container(
           child: StreamBuilder<QuerySnapshot>(
-            stream: Database.getListPasien(UserUID),
+            stream: Database.getListPasienCare(UserUID),
             builder: (BuildContext context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
