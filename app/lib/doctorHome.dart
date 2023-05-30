@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -185,7 +183,6 @@ class DoctorHomeScreen extends StatelessWidget {
                     Timestamp jamSelesai = patientDoc["jamSelesai"];
                     DateTime dateTimeMulai = jamMulai.toDate();
                     DateTime dateTimeSelesai = jamSelesai.toDate();
-                    Bool status = patientDoc["active"];
                     String formatMulai =
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
                     String formatSelesai =
@@ -237,16 +234,16 @@ class DoctorHomeScreen extends StatelessWidget {
                                             Color.fromRGBO(0, 74, 173, 1),
                                       ),
                                       onPressed: () {
-                                        if (status == true) {
+                                        // if (status == true) {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ChatPage(
                                                           chatId: chatId,
                                                           time: jamSelesai)));
-                                        }else{
-                                          sessionOver(context);
-                                        }
+                                        // }else{
+                                        //   sessionOver(context);
+                                        // }
                                       }),
                                 ],
                               ),
