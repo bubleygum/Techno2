@@ -50,7 +50,7 @@ class doctorTherapistStatefulWidget extends State<PesananUserStatefulWidget> {
             onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => home_page()), (Route<dynamic> route) => false),
           ),
           title: Text(
-            'List Pesanan',
+            'History Pesanan',
             style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1)),
           ),
         
