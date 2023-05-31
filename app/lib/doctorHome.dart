@@ -179,7 +179,8 @@ class DoctorHomeScreen extends StatelessWidget {
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
                     String formatSelesai =
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeSelesai);
-
+                    DateTime currentTime = DateTime.now();
+                    bool showData = jamSelesai.toDate().isAfter(currentTime);
                     return StreamBuilder<DocumentSnapshot>(
                       stream: Database.getPatientData(patientID),
                       builder: (context, snapshot) {
@@ -190,7 +191,7 @@ class DoctorHomeScreen extends StatelessWidget {
                           );
                         } else if (snapshot.hasError) {
                           return Text('error');
-                        } else if (snapshot.hasData) {
+                        } else if (snapshot.hasData && showData) {
                           DocumentSnapshot doc = snapshot.data!;
                           String nama = doc["username"];
 

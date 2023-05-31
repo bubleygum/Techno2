@@ -112,38 +112,38 @@ class LoginForm extends StatelessWidget {
                     }
                   },
               )),
-            SizedBox(height: 10),
-            //login as caregiver
-            SizedBox(
-              width: 250,
-              child: new ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(0, 74, 173, 1),
-                ),
-                child: const Text('Login as Caregiver'),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => home_page()));
-                    }
-                  },
-              )),
-            SizedBox(height: 10),
-            //login as counselor / doctor 
-            SizedBox(
-              width: 250,
-              child: new ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(0, 74, 173, 1),
-                ),
-                child: const Text('Login as Doctor or Counselor'),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Loading'))
-                      );
-                    }
-                  },
-              )),
+            // SizedBox(height: 10),
+            // //login as caregiver
+            // SizedBox(
+            //   width: 250,
+            //   child: new ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Color.fromRGBO(0, 74, 173, 1),
+            //     ),
+            //     child: const Text('Login as Caregiver'),
+            //       onPressed: () {
+            //         if (_formKey.currentState!.validate()) {
+            //           Navigator.of(context).push(MaterialPageRoute(builder: (context) => home_page()));
+            //         }
+            //       },
+            //   )),
+            // SizedBox(height: 10),
+            // //login as counselor / doctor 
+            // SizedBox(
+            //   width: 250,
+            //   child: new ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Color.fromRGBO(0, 74, 173, 1),
+            //     ),
+            //     child: const Text('Login as Doctor or Counselor'),
+            //       onPressed: () {
+            //         if (_formKey.currentState!.validate()) {
+            //           ScaffoldMessenger.of(context).showSnackBar(
+            //             const SnackBar(content: Text('Loading'))
+            //           );
+            //         }
+            //       },
+            //   )),
             SizedBox(height: 10),
             //login as counselor / doctor  
             Row(
