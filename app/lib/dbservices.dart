@@ -67,7 +67,7 @@ class Database {
   }
   static Stream<QuerySnapshot> getListPasienCare(id) {
     DocumentReference docRef = tabelCaregiver.doc(id);
-    CollectionReference listPatient = docRef.collection("listPasien");
+    CollectionReference listPatient = docRef.collection("listCustomer");
     return listPatient.snapshots();
   }
   static Stream<DocumentSnapshot> getPatientData(String? patientID) {
@@ -79,6 +79,12 @@ class Database {
   static Stream<DocumentSnapshot> getDoctorDetail(String? doctorID) {
     return FirebaseFirestore.instance
         .collection('doctorList')
+        .doc(doctorID)
+        .snapshots();
+  }
+    static Stream<DocumentSnapshot> getCaregiverDetail(String? doctorID) {
+    return FirebaseFirestore.instance
+        .collection('caregiverList')
         .doc(doctorID)
         .snapshots();
   }

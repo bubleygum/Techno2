@@ -90,7 +90,7 @@ class CaregiverHomeScreen extends StatelessWidget {
                   ),
                   Container(
                     child: StreamBuilder<DocumentSnapshot>(
-                      stream: Database.getDoctorDetail(UserUID),
+                      stream: Database.getCaregiverDetail(UserUID),
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
@@ -158,7 +158,7 @@ class CaregiverHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
-            stream: Database.getListPasien(UserUID),
+            stream: Database.getListPasienCare(UserUID),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('error');
@@ -179,7 +179,8 @@ class CaregiverHomeScreen extends StatelessWidget {
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeMulai);
                     String formatSelesai =
                         DateFormat('dd-MM-yyyy HH:mm').format(dateTimeSelesai);
-
+                    DateTime currentTime = DateTime.now();
+                    bool showData = jamSelesai.toDate().isAfter(currentTime);
                     return StreamBuilder<DocumentSnapshot>(
                       stream: Database.getPatientData(patientID),
                       builder: (context, snapshot) {
@@ -190,7 +191,7 @@ class CaregiverHomeScreen extends StatelessWidget {
                           );
                         } else if (snapshot.hasError) {
                           return Text('error');
-                        } else if (snapshot.hasData) {
+                        } else if (snapshot.hasData && showData) {
                           DocumentSnapshot doc = snapshot.data!;
                           String nama = doc["username"];
 

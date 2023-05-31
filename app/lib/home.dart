@@ -1,3 +1,4 @@
+import 'package:apps/caregiverHome.dart';
 import 'package:apps/chatWidget.dart';
 import 'package:apps/workshopList_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,9 @@ class HomeScreen extends StatelessWidget {
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => ListTherapy()));
                       // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => ChatPage(chatId: "fuNojwwECWC3KWgTfIT4")));
+                      //     builder: (context) => DoctorHome()));
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DoctorHome()));
+                          builder: (context) => CaregiverHome()));
                     },
                   ),
                   FittedBox(
