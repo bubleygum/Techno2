@@ -19,8 +19,9 @@ class ConsultCheckOutPage extends StatefulWidget {
   final String pengalaman;
   final String rating;
   final String hargaSesi;
+  final int income;
   final ConsultType jenisKonsultasi;
-  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi, required this.idDokter, required this.jenisKonsultasi}) : super(key: key);
+  const ConsultCheckOutPage({Key? key, required this.nama, required this.jabatan, required this.pengalaman, required this.rating, required this.hargaSesi, required this.idDokter, required this.jenisKonsultasi, required this.income}) : super(key: key);
   @override
     State<ConsultCheckOutPage> createState() => ConsultCheckOut();
 }
@@ -318,6 +319,8 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
                                 ),
                                 onPressed: () {     
                                   var idChat = Uuid().v4();
+                                  var total = int.parse(widget.hargaSesi) + widget.income;
+                                  UpdateIncomeDokter(total);
                                   createListPasien(IDChat: idChat);
                                   createPesananUser(IDChat: idChat);
                                   createChat(IDChat: idChat);
@@ -369,6 +372,25 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
     }
     
   }
+  Future UpdateIncomeDokter(int incomeDokter) async{
+    if(widget.jenisKonsultasi == ConsultType.konsultasiDokter){
+      final docListPasien = FirebaseFirestore.instance
+      .collection('doctorList')
+      .doc(widget.idDokter)
+      .update({"income": incomeDokter})
+      .then((_) => print('Field updated successfully!'))
+      .catchError((error) => print('Error updating field: $error'));
+      
+    }else if(widget.jenisKonsultasi == ConsultType.terapi){
+      final docListPasien = FirebaseFirestore.instance
+      .collection('therapistList')
+      .doc(widget.idDokter)
+      .update({"income": incomeDokter})
+      .then((_) => print('Field updated successfully!'))
+      .catchError((error) => print('Error updating field: $error'));
+    }
+    
+  }
   Future createPesananUser({String? IDChat}) async{
     var idTransaksi = Uuid().v4();
     final docListKonsultasi = FirebaseFirestore.instance
@@ -406,6 +428,8 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
     
     
   }
+
+  
   Future createChat({String? IDChat}) async{
     var idTransaksi = Uuid().v4();
     final docListPasien = FirebaseFirestore.instance

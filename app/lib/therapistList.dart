@@ -28,6 +28,7 @@ class TherapistList extends StatelessWidget {
                       String lvPengalaman = dsData["pengalaman"];
                       String lvRating = dsData["rating"];
                       String lvHargaSesi= dsData["hargaSesi"].toString();
+                      int lvIncome = dsData["income"];
                       return Card(
                         elevation: 5,
                         child: Container(
@@ -159,7 +160,8 @@ class TherapistList extends StatelessWidget {
                                                                     pengalaman: lvPengalaman,
                                                                     hargaSesi: lvHargaSesi,
                                                                     rating: lvRating,
-                                                                    jenisKonsultasi: ConsultType.terapi,)));
+                                                                    jenisKonsultasi: ConsultType.terapi,
+                                                                    income: lvIncome)));
                                                   }))
                                         ],
                                       ),
