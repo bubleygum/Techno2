@@ -10,6 +10,7 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:apps/doctor_therapist.dart';
 import 'package:apps/doctorHome.dart';
+import 'package:apps/formDokter.dart';
 import 'caregiver_list.dart';
 
 final List<String> imgList = [
@@ -51,10 +52,12 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => ListTherapy()));
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => DoctorHome()));
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CaregiverHome()));
+                          builder: (context) => DoctorHome()));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => CaregiverHome()));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => formDokter()));
                     },
                   ),
                   FittedBox(

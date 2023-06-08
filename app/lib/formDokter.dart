@@ -4,26 +4,26 @@ import 'package:apps/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MySignUpPage extends StatelessWidget {
-  const MySignUpPage({Key? key}) : super(key: key);
+class formDokter extends StatelessWidget {
+  const formDokter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: Text('Sign Up')),
-      body: SignUpForm(),
+      body: formDokterState(),
     );
   }
 }
 
-class SignUpForm extends StatelessWidget {
-  SignUpForm({super.key});
-  TextEditingController _emailController  = TextEditingController();
-  TextEditingController _usernameController  = TextEditingController();
-  TextEditingController _passwordController  = TextEditingController();
-  TextEditingController _phoneNumberController  = TextEditingController();
-  TextEditingController pengalaman  = TextEditingController();
-  TextEditingController jabatan  = TextEditingController();
+class formDokterState extends StatelessWidget {
+  formDokterState({super.key});
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController pengalaman = TextEditingController();
+  TextEditingController jabatan = TextEditingController();
   // show the password or not
   bool _isObscure = true;
 
@@ -33,12 +33,13 @@ class SignUpForm extends StatelessWidget {
     return phoneRegex.hasMatch(phone);
   }
 
-  
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final phoneCont = TextEditingController();
     final passCont = TextEditingController();
+    String? username = "";
+
     // regular expression to check if string
     RegExp pass_valid = RegExp("(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
     //A function that validate user entered password
@@ -127,7 +128,7 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
             validator: (value) {
-              if (value == null || value.isEmpty ) {
+              if (value == null || value.isEmpty) {
                 return 'Password harus di isi';
               }
               return null;
@@ -154,7 +155,9 @@ class SignUpForm extends StatelessWidget {
               ),
             ),
             validator: (value) {
-              if (value == null || value.isEmpty || value != _passwordController.text.toString()) {
+              if (value == null ||
+                  value.isEmpty ||
+                  value != _passwordController.text.toString()) {
                 return 'Password harus di isi';
               }
               return null;
@@ -252,40 +255,42 @@ class SignUpForm extends StatelessWidget {
               child: const Text('Sign Up'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: _emailController.text, 
-                    password: _passwordController.text).then((value){
-                      final UserUID = value.user?.uid.toString();
-                      createUser(userUID: UserUID);
-                      
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => MyLogInPage()), 
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text)
+                      .then((value) {
+                    final UserUID = value.user?.uid.toString();
+                    createUser(userUID: UserUID);
+
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => MyLogInPage()),
                         (Route<dynamic> route) => false);
-                      }).onError((error, stackTrace) {
-                      print("error ${error.toString()}");
-                    });
+                  }).onError((error, stackTrace) {
+                    print("error ${error.toString()}");
+                  });
                 }
-                
-                      
               },
             )),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Already Have Account?",
-                  style: TextStyle(color: Color.fromRGBO(30, 100, 192, 1))),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MyLogInPage()), (Route<dynamic> route) => false);
-                  },
-                  child: const Text(" Sign In",
-                  style: TextStyle(color: Color.fromRGBO(0, 74, 173, 1), fontWeight: FontWeight.bold)),
-                )
-
-              ],
-
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Already Have Account?",
+                style: TextStyle(color: Color.fromRGBO(30, 100, 192, 1))),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyLogInPage()),
+                    (Route<dynamic> route) => false);
+              },
+              child: const Text(" Sign In",
+                  style: TextStyle(
+                      color: Color.fromRGBO(0, 74, 173, 1),
+                      fontWeight: FontWeight.bold)),
             )
+          ],
+        ),
       ],
     );
     return Form(
@@ -295,19 +300,22 @@ class SignUpForm extends StatelessWidget {
       ),
     );
   }
-  
-  Future createUser({String? userUID}) async{
-    final docDokter = FirebaseFirestore.instance.collection('doctorList').doc(userUID);
+
+  Future<void> createUser({String? userUID}) async {
+    final user = FirebaseFirestore.instance.collection("users").doc(userUID!);
+    final docDokter =
+        FirebaseFirestore.instance.collection('doctorList').doc(userUID);
     final json = {
       'jabatan': jabatan.text.toString(),
-      'pengalaman': pengalaman.text.toString()
+      'pengalaman': pengalaman.text.toString(),
+      'rating': 100,
+      'hargaSesi':0
     };
+
     //create document and write to DB
     await docDokter
-      .set(json)
-      .whenComplete(() => print("added to database"))
-      .catchError((e) => print(e));
+        .set(json)
+        .whenComplete(() => print("added to database"))
+        .catchError((e) => print(e));
   }
 }
-
-
