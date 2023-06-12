@@ -4,15 +4,15 @@ import 'package:apps/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class formDokter extends StatefulWidget {
-  final String namaDokter;
-  const formDokter({Key? key, required this.namaDokter}) : super(key: key);
+class formCaregiver extends StatefulWidget {
+  final String namaCaregiver;
+  const formCaregiver({Key? key, required this.namaCaregiver}) : super(key: key);
 
   @override
-    State<formDokter> createState() => formDokterState();
+    State<formCaregiver> createState() => formCaregiverState();
 }
 
-class formDokterState extends State<formDokter> {
+class formCaregiverState extends State<formCaregiver> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -299,11 +299,9 @@ class formDokterState extends State<formDokter> {
   Future<void> createUser({String? userUID}) async {
     final user = FirebaseFirestore.instance.collection("users").doc(userUID!);
     final docDokter =
-        FirebaseFirestore.instance.collection('doctorList').doc(userUID);
+        FirebaseFirestore.instance.collection('caregiverList').doc(userUID);
     final json = {
-      'nama': widget.namaDokter,
-      'jabatan': jabatan.text.toString(),
-      'pengalaman': pengalaman.text.toString(),
+      'nama': widget.namaCaregiver,
       'rating': '100',
       'hargaSesi':0,
       'income':0

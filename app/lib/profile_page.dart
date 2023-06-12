@@ -1,5 +1,9 @@
 import 'package:apps/DataClass/user_data.dart';
+import 'package:apps/admin_dokter.dart';
 import 'package:apps/dbservices.dart';
+import 'package:apps/doctorHome.dart';
+import 'package:apps/formCaregiver.dart';
+import 'package:apps/formDokter.dart';
 import 'package:apps/widget/appbar_widget.dart';
 import 'package:apps/widget/profile_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +29,8 @@ class ProfilePage extends State<MyProfilePage> {
   String? phoneNumber = "";
   var userData = UserData(username: '', phoneNumber: '', email: '');
   bool _isLoading = true;
+  bool isDokter = false;
+  bool isCaregiver = false;
   Future _getUserData() async 
   {
     await FirebaseFirestore.instance.collection('users')
@@ -48,16 +54,50 @@ class ProfilePage extends State<MyProfilePage> {
       });
   }
 
+  Future _getDataDokter() async 
+  {
+    await FirebaseFirestore.instance.collection('doctorList')
+      .doc((FirebaseAuth.instance.currentUser!.uid))
+      .get()
+      .then((snapshot) async
+      {
+        if(snapshot.exists)
+        {  
+          setState(() {
+            isDokter = true;
+          });
+        }
+
+      });
+  }
+  Future _getDataCaregiver() async 
+  {
+    await FirebaseFirestore.instance.collection('caregiverList')
+      .doc((FirebaseAuth.instance.currentUser!.uid))
+      .get()
+      .then((snapshot) async
+      {
+        if(snapshot.exists)
+        {  
+          setState(() {
+            isCaregiver = true;
+          });
+        }
+
+      });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getDataDokter();
+    _getDataCaregiver();
     _getUserData();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
       body: _isLoading
         ? Center(child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation(
@@ -67,6 +107,7 @@ class ProfilePage extends State<MyProfilePage> {
         : ListView(
         physics: BouncingScrollPhysics(),
         children: [
+          const SizedBox(height: 24),
           ProfileWidget(
             imagePath: 'assets/images/art1.jpg', 
             onClicked: () async{}
@@ -74,7 +115,11 @@ class ProfilePage extends State<MyProfilePage> {
           const SizedBox(height: 24),
           buildName(userData),
           const SizedBox(height: 24),
-          Center(child: buildButton()),
+          Center(child: buildButtonDokter()),
+          const SizedBox(height: 24),
+          Center(child: buildButtonCaregiver()),
+          const SizedBox(height: 24),
+          Center(child: buildButtonLogOut()),
 
         ],
       )
@@ -96,15 +141,45 @@ class ProfilePage extends State<MyProfilePage> {
         ],
   );
 
-  Widget buildButton() => ElevatedButton(
+  Widget buildButtonLogOut() => ElevatedButton(
     style: ElevatedButton.styleFrom(
       primary: Color.fromRGBO(0, 74, 173, 1),
     ),
         child: const Text('LogOut'),
           onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MyLogInPage()), (Route<dynamic> route) => false);
-                  
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => MyLogInPage()), (Route<dynamic> route) => false);     
           },
       );
 
+    Widget buildButtonDokter() => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Color.fromRGBO(0, 74, 173, 1),
+    ),
+        child: const Text('Login As Doctor'),
+          onPressed: () {
+            if(isCaregiver){
+
+            }else if(isDokter){
+              Navigator.of(context).push(MaterialPageRoute( builder: (context) => DoctorHome()));  
+            }else{
+              Navigator.of(context).push(MaterialPageRoute( builder: (context) => formDokter(namaDokter: userData.username)));
+              }
+          },
+      );
+
+    Widget buildButtonCaregiver() => ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Color.fromRGBO(0, 74, 173, 1),
+    ),
+        child: const Text('Login As Caregiver'),
+          onPressed: () {
+            if(isDokter){
+
+            }else if(isCaregiver){
+              Navigator.of(context).push(MaterialPageRoute( builder: (context) => DoctorHome()));  
+            }else{
+              Navigator.of(context).push(MaterialPageRoute( builder: (context) => formCaregiver(namaCaregiver: userData.username)));
+            }
+          },
+      );
 }
