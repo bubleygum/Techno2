@@ -4,6 +4,8 @@ import 'package:apps/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'doctorHome.dart';
+
 class formDokter extends StatefulWidget {
   final String namaDokter;
   const formDokter({Key? key, required this.namaDokter}) : super(key: key);
@@ -47,7 +49,9 @@ class formDokterState extends State<formDokter> {
       }
     }
 
-    var column = Column(
+    var column = 
+    Material(
+      child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -250,45 +254,33 @@ class formDokterState extends State<formDokter> {
               child: const Text('Sign Up'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                          email: _emailController.text,
-                          password: _passwordController.text)
-                      .then((value) {
-                    final UserUID = value.user?.uid.toString();
+                  
+                    final UserUID = FirebaseAuth.instance.currentUser?.uid;
                     createUser(userUID: UserUID);
 
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => MyLogInPage()),
+                        MaterialPageRoute(builder: (context) => DoctorHome()),
                         (Route<dynamic> route) => false);
-                  }).onError((error, stackTrace) {
-                    print("error ${error.toString()}");
-                  });
+                  
                 }
               },
             )),
         SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Already Have Account?",
-                style: TextStyle(color: Color.fromRGBO(30, 100, 192, 1))),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => MyLogInPage()),
-                    (Route<dynamic> route) => false);
+        SizedBox(
+            width: 250,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromRGBO(0, 74, 173, 1),
+              ),
+              child: const Text('return'),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
-              child: const Text(" Sign In",
-                  style: TextStyle(
-                      color: Color.fromRGBO(0, 74, 173, 1),
-                      fontWeight: FontWeight.bold)),
-            )
-          ],
-        ),
+            )),
       ],
-    );
+    ));
     return Form(
+      
       key: _formKey,
       child: Center(
         child: column,
