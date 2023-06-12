@@ -1,5 +1,6 @@
 import 'package:apps/DataClass/user_data.dart';
 import 'package:apps/admin_dokter.dart';
+import 'package:apps/caregiverHome.dart';
 import 'package:apps/dbservices.dart';
 import 'package:apps/doctorHome.dart';
 import 'package:apps/formCaregiver.dart';
@@ -179,7 +180,7 @@ class ProfilePage extends State<MyProfilePage> {
             if(isDokter){
 
             }else if(isCaregiver){
-              Navigator.of(context).push(MaterialPageRoute( builder: (context) => DoctorHome()));  
+              Navigator.of(context).push(MaterialPageRoute( builder: (context) => careHome()));  
             }else{
               Navigator.of(context).push(MaterialPageRoute( builder: (context) => formCaregiver(namaCaregiver: userData.username)));
             }
