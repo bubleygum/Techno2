@@ -52,10 +52,10 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => ListTherapy()));
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DoctorHome()));
                       // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => CaregiverHome()));
+                      //     builder: (context) => DoctorHome()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => careHome()));
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => formDokter()));
                     },

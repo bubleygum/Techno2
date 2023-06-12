@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,8 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dbservices.dart';
 import 'package:intl/intl.dart';
 
-class CaregiverHome extends StatelessWidget {
-  const CaregiverHome({Key? key}) : super(key: key);
+class careHome extends StatelessWidget {
+  const careHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +26,26 @@ class CaregiverHome extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Color.fromRGBO(144, 177, 222, 0.1),
-      body: CaregiverHomeScreen(),
+      body: careHomeScreen(),
     );
   }
 }
 
-class CaregiverHomeScreen extends StatelessWidget {
-  CaregiverHomeScreen({Key? key}) : super(key: key);
+class careHomeScreen extends StatelessWidget {
+  careHomeScreen({Key? key}) : super(key: key);
   final UserUID = FirebaseAuth.instance.currentUser?.uid;
+  TextEditingController hargaEdit = TextEditingController();
+  TextEditingController title = TextEditingController();
+  TextEditingController warning = TextEditingController();
+  Future<void> editHarga({String? userUID}) async {
+    final docDokter =
+        FirebaseFirestore.instance.collection('caregiverList').doc(userUID);
+    final json = {'hargaSesi': int.parse(hargaEdit.text)};
+    await docDokter
+        .update(json)
+        .whenComplete(() => print("updated"))
+        .catchError((e) => print(e));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +119,129 @@ class CaregiverHomeScreen extends StatelessWidget {
                         }
                         DocumentSnapshot data = snapshot.data!;
                         int harga = data["hargaSesi"];
-                        int pendapatan = itemCount * harga;
+                        return Container(
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: FaIcon(FontAwesomeIcons.moneyBill),
+                                iconSize: 20,
+                                color: Color.fromRGBO(0, 74, 173, 1),
+                                onPressed: () {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Edit harga sesi:'),
+                                          content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                TextField(
+                                                  controller: hargaEdit,
+                                                  decoration:
+                                                      new InputDecoration(
+                                                          hintText:
+                                                              'Harga Baru'),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextField(
+                                                  controller: warning,
+                                                  decoration:
+                                                      InputDecoration.collapsed(
+                                                          hintText: ""),
+                                                ),
+                                              ]),
+                                          actions: [
+                                            Row(
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('Close'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    bool
+                                                        isNumericUsingRegularExpression(
+                                                            String string) {
+                                                      final numericRegex = RegExp(
+                                                          r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+                                                      return numericRegex
+                                                          .hasMatch(string);
+                                                    }
+
+                                                    if (hargaEdit
+                                                        .text.isEmpty) {
+                                                      warning.text =
+                                                          'Tidak boleh kosong';
+                                                    } else if (!isNumericUsingRegularExpression(
+                                                        hargaEdit.text)) {
+                                                      warning.text =
+                                                          'Harus berupa angka';
+                                                    } else {
+                                                      editHarga(
+                                                          userUID: UserUID);
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }
+                                                  },
+                                                  child: Text('OK'),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  });
+                                },
+                              ),
+                              FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Column(children: <Widget>[
+                                    Text(
+                                      "Harga Sesi",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(0, 74, 173, 1),
+                                      ),
+                                    ),
+                                    Text(
+                                      '$harga',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromRGBO(0, 74, 173, 1),
+                                      ),
+                                    ),
+                                  ])),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: Database.getCaregiverDetail(UserUID),
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                              Color.fromRGBO(0, 74, 173, 1),
+                            ),
+                          );
+                        }
+                        DocumentSnapshot data = snapshot.data!;
+                        int pendapatan = data["income"];
                         return Container(
                           child: Row(
                             children: <Widget>[
