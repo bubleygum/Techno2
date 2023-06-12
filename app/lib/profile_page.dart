@@ -51,6 +51,9 @@ class ProfilePage extends State<MyProfilePage> {
           
         }
 
+      })
+      .onError((error, stackTrace){
+        print(error);
       });
   }
 
