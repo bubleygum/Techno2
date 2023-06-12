@@ -20,7 +20,8 @@ class CaregiverCheckOutPage extends StatefulWidget {
   final String nama;
   final String rating;
   final String hargaSesi;
-  const CaregiverCheckOutPage({Key? key, required this.nama, required this.rating, required this.hargaSesi, required this.idCaregiver}) : super(key: key);
+  final int income;
+  const CaregiverCheckOutPage({Key? key, required this.nama, required this.rating, required this.hargaSesi, required this.idCaregiver, required this.income}) : super(key: key);
   @override
     State<CaregiverCheckOutPage> createState() => CaregiverCheckOut();
 }
@@ -443,7 +444,8 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
                                 ),
                                 onPressed: () {     
                                   var idChat = Uuid().v4();
-                                  
+                                  var total = (int.parse(widget.hargaSesi) * int.parse(dropdownvalue[0])) + widget.income;
+                                  UpdateIncomeCaregiver(total);
                                   createListCustomer(IDChat: idChat, durasi: int.parse(dropdownvalue[0]));
                                   createPesananUser(IDChat: idChat, durasi: int.parse(dropdownvalue[0]));
                                   createChat(IDChat: idChat);
@@ -506,9 +508,20 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
         .set(json)
         .whenComplete(() => print("added to database"))
         .catchError((e) => print(e));
-      
+  }
+
+  Future UpdateIncomeCaregiver(int incomeCaregiver) async{
+    
+    final docListPasien = FirebaseFirestore.instance
+    .collection('caregiverList')
+    .doc(widget.idCaregiver)
+    .update({"income": incomeCaregiver})
+    .then((_) => print('Field updated successfully!'))
+    .catchError((error) => print('Error updating field: $error'));
+    
     
   }
+
   Future createChat({String? IDChat}) async{
     var idTransaksi = Uuid().v4();
     final docListPasien = FirebaseFirestore.instance
@@ -519,7 +532,7 @@ class CaregiverCheckOut extends State<CaregiverCheckOutPage> {
     //create collection and write to DB
     await docListPasien
       .add({})
-      .catchError((e) => print(e));;
+      .catchError((e) => print(e));
   }
 
 }

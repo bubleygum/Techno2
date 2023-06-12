@@ -6,15 +6,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'doctorHome.dart';
 
-class formDokter extends StatefulWidget {
-  final String namaDokter;
-  const formDokter({Key? key, required this.namaDokter}) : super(key: key);
+class formCaregiver extends StatefulWidget {
+  final String namaCaregiver;
+  const formCaregiver({Key? key, required this.namaCaregiver}) : super(key: key);
 
   @override
-    State<formDokter> createState() => formDokterState();
+    State<formCaregiver> createState() => formCaregiverState();
 }
 
-class formDokterState extends State<formDokter> {
+class formCaregiverState extends State<formCaregiver> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -190,60 +190,7 @@ class formDokterState extends State<formDokter> {
             },
           ),
         ),
-        SizedBox(height: 15),
-        SizedBox(
-          width: 300,
-          height: 30,
-          child: TextFormField(
-            controller: jabatan,
-            decoration: const InputDecoration(
-              icon: FaIcon(FontAwesomeIcons.rankingStar),
-              hintText: 'Jabatan saat ini: ',
-              errorStyle: TextStyle(height: 0.5, fontSize: 0),
-              errorMaxLines: 2,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              contentPadding:
-                  EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
-              border: OutlineInputBorder(
-                borderSide:
-                    BorderSide(width: 2, color: Color.fromRGBO(0, 0, 0, 0.3)),
-              ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Jabatan harus di isi';
-              }
-              return null;
-            },
-          ),
-        ),
-        SizedBox(height: 15),
-        SizedBox(
-          width: 300,
-          height: 30,
-          child: TextFormField(
-            controller: pengalaman,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.handshake),
-              hintText: 'Pengalaman... tahun',
-              errorStyle: TextStyle(height: 0.5, fontSize: 0),
-              errorMaxLines: 2,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              contentPadding:
-                  EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
-              border: OutlineInputBorder(
-                borderSide:
-                    BorderSide(width: 2, color: Color.fromRGBO(0, 0, 0, 0.3)),
-              ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Pengalaman';
-              }
-              return null;
-            },
-          ),
-        ),
+        
         SizedBox(height: 20),
         SizedBox(
             width: 250,
@@ -254,8 +201,7 @@ class formDokterState extends State<formDokter> {
               child: const Text('Sign Up'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  
-                    final UserUID = FirebaseAuth.instance.currentUser?.uid;
+                  final UserUID = FirebaseAuth.instance.currentUser?.uid;
                     createUser(userUID: UserUID);
 
                     Navigator.of(context).pushAndRemoveUntil(
@@ -280,7 +226,6 @@ class formDokterState extends State<formDokter> {
       ],
     ));
     return Form(
-      
       key: _formKey,
       child: Center(
         child: column,
@@ -291,11 +236,9 @@ class formDokterState extends State<formDokter> {
   Future<void> createUser({String? userUID}) async {
     final user = FirebaseFirestore.instance.collection("users").doc(userUID!);
     final docDokter =
-        FirebaseFirestore.instance.collection('doctorList').doc(userUID);
+        FirebaseFirestore.instance.collection('caregiverList').doc(userUID);
     final json = {
-      'nama': widget.namaDokter,
-      'jabatan': jabatan.text.toString(),
-      'pengalaman': pengalaman.text.toString(),
+      'nama': widget.namaCaregiver,
       'rating': '100',
       'hargaSesi':0,
       'income':0
