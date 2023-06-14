@@ -47,6 +47,14 @@ class HomeStatefulWidgetState extends State<HomeStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.all(8.0), // Set the desired padding values
+          child: Image.asset(
+            'assets/images/logo_GUIDE.png',
+            width: 30, // Set the desired width
+            height: 30, // Set the desired height
+          ),
+        ),
         // leading: Icon(Icons.menu),
         // title: Text('Page title'),
         actions: [

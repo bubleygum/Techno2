@@ -177,7 +177,7 @@ class ConsultCheckOut extends State<ConsultCheckOutPage> {
               elevation: 5,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                height: 130,
+                height: 150,
                 width: 1080,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

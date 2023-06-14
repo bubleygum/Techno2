@@ -28,11 +28,15 @@ class LoginForm extends StatelessWidget {
 
     return Form(
       key: _formKey,
-      child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: < Widget > [
+            SizedBox(height: 75),
+            Image.asset('assets/images/logo_guide.png',
+              width: 200, 
+              height: 200,),
+            SizedBox(height: 70),
             SizedBox(
               width: 300,
               height: 30,
@@ -89,7 +93,7 @@ class LoginForm extends StatelessWidget {
             SizedBox(height: 20),
             //login button
             SizedBox(
-              width: 250,
+              width: 275,
               child: new ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromRGBO(0, 74, 173, 1),
@@ -164,7 +168,6 @@ class LoginForm extends StatelessWidget {
             )
           ],
         ),
-      ),
     );
   }
 }
